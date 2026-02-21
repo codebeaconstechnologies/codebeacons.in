@@ -514,9 +514,21 @@ ul { list-style: none; }
     background-clip: text;
 }
 
+.hero-tagline {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.hero-tagline .typing-text {
+    color: var(--primary-light);
+    font-weight: 700;
+}
+
 .hero-subtitle {
-    font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.063rem;
+    color: rgba(255, 255, 255, 0.6);
     max-width: 600px;
     margin: 0 auto 40px;
     line-height: 1.8;
@@ -1768,4 +1780,184 @@ ul { list-style: none; }
 .nav-overlay.show {
     opacity: 1;
     visibility: visible;
+}
+
+/* ============================================
+   SCROLL PROGRESS BAR
+   ============================================ */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: var(--gradient-2);
+    z-index: 10001;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(10, 186, 181, 0.5);
+}
+
+/* ============================================
+   BACK TO TOP BUTTON
+   ============================================ */
+.back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--gradient-2);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(10, 186, 181, 0.3);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(10, 186, 181, 0.5);
+}
+
+/* ============================================
+   CURSOR GLOW FOLLOWER
+   ============================================ */
+.cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(10, 186, 181, 0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .cursor-glow { display: none; }
+}
+
+/* ============================================
+   HERO PARTICLES CANVAS
+   ============================================ */
+.hero-particles {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* ============================================
+   TYPING TEXT
+   ============================================ */
+.typing-wrapper {
+    display: inline-flex;
+    align-items: center;
+}
+
+.typing-text {
+    border-right: 2px solid var(--primary-light);
+    padding-right: 4px;
+    animation: blink-caret 0.8s step-end infinite;
+    min-width: 10px;
+    min-height: 1.2em;
+}
+
+@keyframes blink-caret {
+    0%, 100% { border-color: var(--primary-light); }
+    50% { border-color: transparent; }
+}
+
+/* ============================================
+   FORM INTERACTIONS
+   ============================================ */
+.form-group.focused label {
+    color: var(--primary);
+}
+
+.form-group input.error,
+.form-group textarea.error,
+.form-group select.error {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.03);
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+}
+
+.shake {
+    animation: shake 0.5s ease;
+}
+
+/* ============================================
+   SERVICE VISUAL HOVER ANIMATION
+   ============================================ */
+.service-visual.active img {
+    transform: scale(1.05);
+}
+
+/* ============================================
+   STAGGERED GRID CHILDREN
+   ============================================ */
+.services-grid > *,
+.values-grid > *,
+.process-steps > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.services-grid > *.visible,
+.values-grid > *.visible,
+.process-steps > *.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   ENHANCED CARD HOVER GLOW
+   ============================================ */
+.service-card {
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.value-card,
+.mission-card,
+.contact-info-card {
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+/* ============================================
+   HERO PARALLAX
+   ============================================ */
+.hero-image {
+    will-change: transform;
+    transform: scale(1.1);
+}
+
+.hero-content {
+    will-change: transform, opacity;
 }
