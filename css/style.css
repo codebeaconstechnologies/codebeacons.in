@@ -1865,9 +1865,11 @@ ul { list-style: none; }
 }
 
 /* Prevent horizontal scroll on mobile */
-html, body {
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 /* Improve map on mobile */
