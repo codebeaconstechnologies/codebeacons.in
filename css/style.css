@@ -203,14 +203,25 @@ ul { list-style: none; }
     position: relative;
 }
 
+/* Scrolled navbar (About, Services, Contact) - dark links for visibility */
+.navbar.scrolled .nav-link {
+    color: var(--dark);
+}
+
+.navbar.scrolled .nav-link:hover,
+.navbar.scrolled .nav-link.active {
+    color: var(--primary);
+    background: rgba(10, 186, 181, 0.08);
+}
+
 .navbar:not(.scrolled) .nav-link {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .navbar:not(.scrolled) .nav-link:hover,
 .navbar:not(.scrolled) .nav-link.active {
     color: var(--white);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .navbar:not(.scrolled) .hamburger span {
@@ -226,12 +237,6 @@ ul { list-style: none; }
 .navbar:not(.scrolled) .nav-cta:hover {
     background: var(--white);
     color: var(--primary-dark);
-}
-
-.nav-link:hover,
-.nav-link.active {
-    color: var(--primary);
-    background: rgba(10, 186, 181, 0.06);
 }
 
 .navbar.scrolled .nav-link.active::after {
@@ -1351,6 +1356,15 @@ ul { list-style: none; }
     text-align: center;
     padding: 36px 24px;
     position: relative;
+    transition: var(--transition);
+}
+
+.process-step:hover .step-number {
+    color: rgba(10, 186, 181, 0.2);
+}
+
+.process-step:hover h4 {
+    color: var(--primary);
 }
 
 .step-number {
@@ -1399,11 +1413,17 @@ ul { list-style: none; }
     background: var(--gray-100);
     border-radius: var(--radius-lg);
     transition: var(--transition);
+    border: 1px solid transparent;
 }
 
 .contact-info-card:hover {
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    border-color: rgba(10, 186, 181, 0.15);
+}
+
+.contact-info-card a {
+    transition: var(--transition);
 }
 
 .contact-info-card .icon {
@@ -1649,6 +1669,16 @@ ul { list-style: none; }
         width: 100%;
         padding: 14px 16px;
         font-size: 1rem;
+        color: var(--dark) !important;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-menu .nav-link:hover,
+    .nav-menu .nav-link.active {
+        color: var(--primary) !important;
+        background: rgba(10, 186, 181, 0.08);
     }
 
     .nav-cta {
@@ -1763,6 +1793,92 @@ ul { list-style: none; }
 
     .about-photo {
         min-height: 280px;
+    }
+
+    .page-header h1 {
+        font-size: 1.75rem;
+        line-height: 1.25;
+    }
+
+    .page-header p {
+        font-size: 0.95rem;
+    }
+
+    .contact-info-card {
+        padding: 20px;
+    }
+
+    .service-detail {
+        padding: 36px 0;
+    }
+
+    .service-detail h3 {
+        font-size: 1.4rem;
+    }
+
+    .mission-card {
+        padding: 28px;
+    }
+
+    .value-card {
+        padding: 28px 20px;
+    }
+
+    .back-to-top {
+        bottom: 24px;
+        right: 24px;
+        width: 44px;
+        height: 44px;
+    }
+
+    .cta-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .footer-logo {
+        height: 56px;
+    }
+}
+
+/* Touch-friendly: ensure tap targets are at least 44px */
+@media (pointer: coarse) {
+    .btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .nav-link {
+        min-height: 44px;
+    }
+
+    .footer-socials a {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        min-height: 48px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+}
+
+/* Prevent horizontal scroll on mobile */
+html, body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Improve map on mobile */
+@media (max-width: 768px) {
+    .map-wrapper {
+        height: 300px;
+        border-radius: var(--radius-lg);
+    }
+
+    .map-section {
+        padding: 0 0 72px;
     }
 }
 
