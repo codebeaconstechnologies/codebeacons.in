@@ -202,15 +202,15 @@ ul { list-style: none; }
     position: relative;
 }
 
-/* Scrolled navbar (About, Services, Contact) - dark links for visibility */
+/* Scrolled navbar (About, Services, Contact) - brand color to match Code Beacons logo */
 .navbar.scrolled .nav-link {
-    color: var(--dark);
+    color: var(--primary);
 }
 
 .navbar.scrolled .nav-link:hover,
 .navbar.scrolled .nav-link.active {
-    color: var(--primary);
-    background: rgba(10, 186, 181, 0.08);
+    color: var(--primary-dark);
+    background: rgba(10, 186, 181, 0.1);
 }
 
 .navbar:not(.scrolled) .nav-link {
@@ -1668,7 +1668,7 @@ ul { list-style: none; }
         width: 100%;
         padding: 14px 16px;
         font-size: 1rem;
-        color: var(--dark) !important;
+        color: var(--primary) !important;
         min-height: 44px;
         display: flex;
         align-items: center;
@@ -1676,8 +1676,8 @@ ul { list-style: none; }
 
     .nav-menu .nav-link:hover,
     .nav-menu .nav-link.active {
-        color: var(--primary) !important;
-        background: rgba(10, 186, 181, 0.08);
+        color: var(--primary-dark) !important;
+        background: rgba(10, 186, 181, 0.1);
     }
 
     .nav-cta {
