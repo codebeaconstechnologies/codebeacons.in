@@ -375,11 +375,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // CONTACT FORM
+    // CONTACT FORM (Formspree)
     // ==========================================
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             let valid = true;
@@ -409,13 +409,43 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             submitBtn.disabled = true;
 
-            setTimeout(() => {
-                contactForm.style.display = 'none';
-                const successMsg = document.querySelector('.form-success');
-                if (successMsg) successMsg.classList.add('show');
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 1500);
+            const formAction = contactForm.getAttribute('action') || '';
+            const isFormspree = formAction.includes('formspree.io');
+
+            if (isFormspree && !formAction.includes('YOUR_FORM_ID')) {
+                try {
+                    const formData = new FormData(contactForm);
+                    const response = await fetch(formAction, {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    const result = await response.json();
+                    if (response.ok && !result.error) {
+                        contactForm.style.display = 'none';
+                        const successMsg = document.querySelector('.form-success');
+                        if (successMsg) successMsg.classList.add('show');
+                    } else {
+                        throw new Error(result.error || 'Something went wrong');
+                    }
+                } catch (err) {
+                    submitBtn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Failed – try again';
+                    submitBtn.disabled = false;
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                    }, 3000);
+                    return;
+                }
+            } else {
+                setTimeout(() => {
+                    contactForm.style.display = 'none';
+                    const successMsg = document.querySelector('.form-success');
+                    if (successMsg) successMsg.classList.add('show');
+                }, 1500);
+            }
+
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
         });
 
         contactForm.querySelectorAll('input, textarea, select').forEach(field => {
