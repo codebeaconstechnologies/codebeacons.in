@@ -153,11 +153,22 @@ ul { list-style: none; }
 }
 
 .navbar.scrolled {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(248, 252, 252, 0.98);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 8px 0;
     box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
+}
+
+.navbar.scrolled .nav-cta {
+    background: var(--gradient-2);
+    color: var(--white);
+    border-color: transparent;
+}
+
+.navbar.scrolled .nav-cta:hover {
+    box-shadow: 0 8px 30px rgba(10, 186, 181, 0.35);
+    color: var(--white);
 }
 
 .nav-container {
