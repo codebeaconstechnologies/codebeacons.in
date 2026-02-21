@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "title": "Why Your Business Needs Cloud Solutions in 2025",
+    "image": "https://images.pexels.com/photos/1148820/pexels-photo-1148820.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "description": "Cloud technology is no longer optional for growing businesses. Learn how migrating to the cloud can improve scalability, security, and cost-efficiency for your organization.",
+    "date": "2025-01-15"
+  },
+  {
+    "id": "2",
+    "title": "5 Signs You Need Custom Software Development",
+    "image": "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "description": "Off-the-shelf tools can only take you so far. Discover when it's time to invest in bespoke software tailored to your unique business processes and goals.",
+    "date": "2025-01-10"
+  }
+]

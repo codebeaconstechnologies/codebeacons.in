@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs | Code Beacons Technologies – Insights & Updates</title>
+    <meta name="description" content="Read the latest blogs from Code Beacons Technologies on IT, software development, cloud, and technology trends. Pune-based tech insights.">
+    <link rel="canonical" href="https://codebeaconstechnologies.github.io/codebeacons.in/blogs.html">
+    <meta property="og:title" content="Blogs | Code Beacons Technologies">
+    <meta property="og:url" content="https://codebeaconstechnologies.github.io/codebeacons.in/blogs.html">
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/images/logo.png" alt="Code Beacons Technologies">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="blogs.html" class="nav-link active">Blogs</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <a href="contact.html" class="btn btn-primary nav-cta">Get in Touch</a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <div class="breadcrumb fade-up">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span class="current">Blogs</span>
+            </div>
+            <span class="section-tag fade-up">Blogs</span>
+            <h1 class="fade-up">Insights & <span class="gradient-text">Updates</span></h1>
+            <p class="fade-up">Thoughts on technology, software development, and digital transformation from the Code Beacons team.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div id="blogList" class="blog-grid"></div>
+            <div id="blogEmpty" class="blog-empty" style="display: none;">
+                <i class="fas fa-newspaper"></i>
+                <p>No blogs yet. Add one using the form below.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section blog-submit-section">
+        <div class="container">
+            <div class="section-header fade-up">
+                <span class="section-tag">Contribute</span>
+                <h2 class="section-title">Add a New <span class="gradient-text">Blog</span></h2>
+                <p class="section-desc">Fill in the details below. After submitting, you'll get instructions to publish the blog on the live site via GitHub.</p>
+            </div>
+            <div class="blog-form-wrapper fade-up">
+                <form id="blogForm" class="blog-form">
+                    <div class="form-group">
+                        <label for="blogTitle">Title *</label>
+                        <input type="text" id="blogTitle" name="title" placeholder="e.g. 5 Tips for Better Cloud Security" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="blogImage">Image URL *</label>
+                        <input type="url" id="blogImage" name="image" placeholder="https://example.com/image.jpg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="blogDescription">Description *</label>
+                        <textarea id="blogDescription" name="description" rows="4" placeholder="Write a short description or full post content..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus"></i> Add Blog
+                    </button>
+                </form>
+                <div id="blogPublishInstructions" class="blog-publish-instructions" style="display: none;">
+                    <h4><i class="fas fa-info-circle"></i> Publish on the live site</h4>
+                    <p>GitHub Pages is static, so new blogs are added by updating the data file. Do this:</p>
+                    <ol>
+                        <li>Open <strong>blogs.json</strong> in your repo.</li>
+                        <li>Add the new entry below to the <strong>array</strong> (add a comma after the last entry, then paste).</li>
+                        <li>Commit and push to GitHub. The new blog will appear on the site within a minute.</li>
+                    </ol>
+                    <label>New entry (copy this):</label>
+                    <pre id="blogJsonOutput" class="blog-json-output"></pre>
+                    <button type="button" class="btn btn-outline" id="copyBlogJson">
+                        <i class="fas fa-copy"></i> Copy to clipboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="assets/images/logo.png" alt="Code Beacons" class="footer-logo">
+                    <p class="footer-tagline">Lighting the Future of Technology</p>
+                    <p class="footer-desc">Empowering businesses with innovative IT solutions and strategic consulting services.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.linkedin.com/company/code-beacons-technologies" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/codebeacons" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="blogs.html">Blogs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Software Development</a></li>
+                        <li><a href="services.html">Cloud Solutions</a></li>
+                        <li><a href="services.html">IT Consulting</a></li>
+                        <li><a href="services.html">Cybersecurity</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@codebeacons.in">info@codebeacons.in</a></li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:8149105574">+91 8149105574</a></li>
+                        <li><i class="fas fa-location-dot"></i> <span>15/3 Pandhare Wasti, Punawale, Pune</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Code Beacons Technologies. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/blogs.js"></script>
+</body>
+</html>
