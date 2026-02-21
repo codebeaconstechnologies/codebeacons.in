@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Code Beacons Technologies</title>
+    <meta name="description" content="Get in touch with Code Beacons Technologies. We'd love to discuss your IT needs and how we can help your business grow.">
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/images/logo.png" alt="Code Beacons Technologies">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+            <a href="contact.html" class="btn btn-primary nav-cta">Get in Touch</a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="breadcrumb fade-up">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span class="current">Contact</span>
+            </div>
+            <span class="section-tag fade-up">Contact Us</span>
+            <h1 class="fade-up">Let's Start a <span class="gradient-text">Conversation</span></h1>
+            <p class="fade-up">Have a project in mind or need IT consulting? Reach out to us and let's discuss how we can help.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Info -->
+                <div class="contact-info fade-up">
+                    <div class="contact-info-cards">
+                        <div class="contact-info-card">
+                            <div class="icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4>Email Us</h4>
+                                <a href="mailto:Codebeacons@gmail.com">Codebeacons@gmail.com</a>
+                                <p>We'll respond within 24 hours</p>
+                            </div>
+                        </div>
+                        <div class="contact-info-card">
+                            <div class="icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4>Call Us</h4>
+                                <a href="tel:8149105574">+91 8149105574</a>
+                                <p>Mon - Sat, 9:00 AM - 7:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="contact-info-card">
+                            <div class="icon">
+                                <i class="fas fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4>Visit Us</h4>
+                                <p>15/3 Pandhare Wasti,<br>Punawale, Pune, Maharashtra</p>
+                            </div>
+                        </div>
+                        <div class="contact-info-card">
+                            <div class="icon">
+                                <i class="fas fa-share-nodes"></i>
+                            </div>
+                            <div>
+                                <h4>Follow Us</h4>
+                                <div style="display: flex; gap: 12px; margin-top: 8px;">
+                                    <a href="https://www.linkedin.com/company/code-beacons-technologies" target="_blank" rel="noopener" style="color: var(--primary); font-size: 1.2rem;">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                    <a href="https://www.instagram.com/codebeacons" target="_blank" rel="noopener" style="color: var(--primary); font-size: 1.2rem;">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-wrapper fade-up" data-delay="100">
+                    <h3>Send Us a Message</h3>
+                    <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+                    <form id="contactForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" placeholder="John" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="service">Service Interested In</label>
+                                <select id="service" name="service">
+                                    <option value="">Select a service</option>
+                                    <option value="software">Custom Software Development</option>
+                                    <option value="cloud">Cloud Solutions & Migration</option>
+                                    <option value="consulting">IT Strategy & Consulting</option>
+                                    <option value="security">Cybersecurity Services</option>
+                                    <option value="mobile">Mobile App Development</option>
+                                    <option value="ai">AI & Data Analytics</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="message">Your Message *</label>
+                                <textarea id="message" name="message" placeholder="Tell us about your project or requirements..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Send Message <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="form-success">
+                        <i class="fas fa-circle-check"></i>
+                        <h4>Message Sent Successfully!</h4>
+                        <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <div class="map-wrapper fade-up">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.2!2d73.74!3d18.63!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sPunawale%2C%20Pune!5e0!3m2!1sen!2sin!4v1700000000000" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Code Beacons Technologies Location">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <div class="cta-bg">
+            <div class="cta-gradient"></div>
+        </div>
+        <div class="container cta-content fade-up">
+            <h2>Prefer a Direct Conversation?</h2>
+            <p>Give us a call or drop by our office. We're always happy to meet in person.</p>
+            <div class="cta-actions">
+                <a href="tel:8149105574" class="btn btn-white btn-lg">
+                    <i class="fas fa-phone"></i> +91 8149105574
+                </a>
+                <a href="mailto:Codebeacons@gmail.com" class="btn btn-outline-white btn-lg">
+                    <i class="fas fa-envelope"></i> Email Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="assets/images/logo.png" alt="Code Beacons" class="footer-logo">
+                    <p class="footer-tagline">Lighting the Future of Technology</p>
+                    <p class="footer-desc">Empowering businesses with innovative IT solutions and strategic consulting services.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.linkedin.com/company/code-beacons-technologies" target="_blank" rel="noopener" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.instagram.com/codebeacons" target="_blank" rel="noopener" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Software Development</a></li>
+                        <li><a href="services.html">Cloud Solutions</a></li>
+                        <li><a href="services.html">IT Consulting</a></li>
+                        <li><a href="services.html">Cybersecurity</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:Codebeacons@gmail.com">Codebeacons@gmail.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:8149105574">+91 8149105574</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-location-dot"></i>
+                            <span>15/3 Pandhare Wasti, Punawale, Pune</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Code Beacons Technologies. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
