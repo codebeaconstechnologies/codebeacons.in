@@ -8,7 +8,7 @@ Your contact form is set up to use **Formspree** so "Send Message" actually deli
 
 1. Go to **https://formspree.io**
 2. Click **Get Started** or **Sign Up**
-3. Sign up with your email (e.g. **info@codebeacons.in**) or use Google/GitHub
+3. Sign up with your email (e.g. **hrteam@codebeacons.in**) or use Google/GitHub
 
 ---
 
@@ -16,7 +16,7 @@ Your contact form is set up to use **Formspree** so "Send Message" actually deli
 
 1. After login, click **New Form** (or **+ New Form**)
 2. **Form name:** e.g. `Code Beacons Contact`
-3. **Email:** Use the address where you want to receive messages (e.g. **info@codebeacons.in**)
+3. **Email:** Use the address where you want to receive messages (e.g. **hrteam@codebeacons.in**)
 4. Click **Create Form**
 
 ---
@@ -74,7 +74,7 @@ In the Formspree dashboard you can:
 ## Summary Checklist
 
 - [ ] Sign up at https://formspree.io  
-- [ ] Create a new form and set your email (e.g. info@codebeacons.in)  
+- [ ] Create a new form and set your email (e.g. hrteam@codebeacons.in)  
 - [ ] Copy the Form ID from the endpoint URL  
 - [ ] In **contact.html**, replace `YOUR_FORM_ID` with that ID  
 - [ ] Save, commit, and push to GitHub  
