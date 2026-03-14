@@ -27,7 +27,14 @@
         var imgEl = document.getElementById('blogPostImage');
         imgEl.src = blog.image || '';
         imgEl.alt = blog.title || 'Blog image';
-        document.getElementById('blogPostDescription').textContent = blog.description || '';
+        var bodyEl = document.getElementById('blogPostDescription');
+        if (bodyEl) {
+            if (blog.content) {
+                bodyEl.innerHTML = blog.content;
+            } else {
+                bodyEl.textContent = blog.description || '';
+            }
+        }
         blogPostEl.style.display = 'block';
         if (blogNotFoundEl) blogNotFoundEl.style.display = 'none';
     }
@@ -103,6 +110,7 @@
     if (slug || idParam) {
         loadAndShow();
     } else {
-        showNotFound();
+        /* No slug/id: redirect to blog listing instead of showing "Post not found" */
+        window.location.replace('blogs.html');
     }
 })();

@@ -1,0 +1,12 @@
+{
+  "name": "codebeacons-website",
+  "version": "1.0.0",
+  "description": "Code Beacons Technologies - IT Services & Consulting",
+  "scripts": {
+    "dev": "http-server -p 4100 -c-1",
+    "serve": "npx serve -l 4100"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
