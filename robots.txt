@@ -1,0 +1,11 @@
+# Code Beacons Technologies - robots.txt
+# https://codebeaconstechnologies.github.io/codebeacons.in
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://codebeaconstechnologies.github.io/codebeacons.in/sitemap.xml
+
+# Disallow admin / private paths if any (none for static site)
+# Disallow: /private/

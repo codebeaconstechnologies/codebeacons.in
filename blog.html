@@ -3,23 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blogs | Code Beacons Technologies – Insights & Updates</title>
-    <meta name="description" content="Code Beacons Technologies blog – articles on IT, software development, cloud solutions, digital transformation, technology trends. Tech insights from Pune.">
-    <meta name="keywords" content="Code Beacons blog, IT blog Pune, software development blog, cloud technology, digital transformation, technology trends, tech insights Pune">
-    <meta name="author" content="Code Beacons Technologies">
-    <link rel="canonical" href="https://codebeaconstechnologies.github.io/codebeacons.in/blogs.html">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Code Beacons Technologies">
-    <meta property="og:title" content="Blogs | Code Beacons Technologies – Insights & Updates">
-    <meta property="og:description" content="Blog – IT, software development, cloud, digital transformation and technology trends. Code Beacons Technologies, Pune.">
-    <meta property="og:url" content="https://codebeaconstechnologies.github.io/codebeacons.in/blogs.html">
-    <meta property="og:image" content="https://codebeaconstechnologies.github.io/codebeacons.in/assets/images/logo.png">
-    <meta property="og:locale" content="en_IN">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Blogs | Code Beacons Technologies – Pune">
-    <meta name="twitter:description" content="Blog on IT, software development, cloud, digital transformation. Code Beacons Technologies.">
-    <meta name="twitter:image" content="https://codebeaconstechnologies.github.io/codebeacons.in/assets/images/logo.png">
-    <meta name="theme-color" content="#0ABAB5">
+    <title>Blog | Code Beacons Technologies</title>
     <meta name="robots" content="index, follow">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <link rel="stylesheet" href="css/style.css">
@@ -27,9 +11,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://codebeaconstechnologies.github.io/codebeacons.in/"},{"@type":"ListItem","position":2,"name":"Blogs","item":"https://codebeaconstechnologies.github.io/codebeacons.in/blogs.html"}]}
-    </script>
 </head>
 <body>
     <nav class="navbar scrolled" id="navbar">
@@ -41,7 +22,7 @@
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="about.html" class="nav-link">About</a></li>
                 <li><a href="services.html" class="nav-link">Services</a></li>
-                <li><a href="blogs.html" class="nav-link active">Blogs</a></li>
+                <li><a href="blogs.html" class="nav-link">Blogs</a></li>
                 <li><a href="contact.html" class="nav-link">Contact</a></li>
             </ul>
             <a href="contact.html" class="btn btn-primary nav-cta">Get in Touch</a>
@@ -51,28 +32,38 @@
         </div>
     </nav>
 
-    <section class="page-header">
-        <div class="container">
-            <div class="breadcrumb fade-up">
-                <a href="index.html">Home</a>
-                <span>/</span>
-                <span class="current">Blogs</span>
+    <main class="section blog-single-section" role="main">
+        <div class="container container--blog-post">
+            <div id="blogNotFound" class="blog-not-found" style="display: none;">
+                <i class="fas fa-file-alt"></i>
+                <h2>Post not found</h2>
+                <p>The blog post you're looking for doesn't exist or may have been removed.</p>
+                <a href="blogs.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Blogs</a>
             </div>
-            <span class="section-tag fade-up">Blogs</span>
-            <h1 class="fade-up">Insights & <span class="gradient-text">Updates</span></h1>
-            <p class="fade-up">Thoughts on technology, software development, and digital transformation from the Code Beacons team.</p>
+            <article id="blogPost" class="blog-single" style="display: none;" itemscope itemtype="https://schema.org/BlogPosting">
+                <nav class="breadcrumb breadcrumb--blog-post fade-up visible" aria-label="Breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="breadcrumb-sep" aria-hidden="true">/</span>
+                    <a href="blogs.html">Blogs</a>
+                    <span class="breadcrumb-sep" aria-hidden="true">/</span>
+                    <span class="current" id="blogPostTitleBreadcrumb">Post</span>
+                </nav>
+                <header class="blog-single-header fade-up visible">
+                    <time class="blog-single-date" id="blogPostDate" datetime="" itemprop="datePublished"></time>
+                    <h1 class="blog-single-title" id="blogPostTitle" itemprop="headline"></h1>
+                </header>
+                <div class="blog-single-image fade-up visible">
+                    <img id="blogPostImage" src="" alt="" itemprop="image">
+                </div>
+                <div class="blog-single-body fade-up visible">
+                    <div id="blogPostDescription" class="blog-single-description" itemprop="articleBody"></div>
+                </div>
+                <div class="blog-single-back">
+                    <a href="blogs.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Blogs</a>
+                </div>
+            </article>
         </div>
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <div id="blogList" class="blog-grid"></div>
-            <div id="blogEmpty" class="blog-empty" style="display: none;">
-                <i class="fas fa-newspaper"></i>
-                <p>No blogs yet.</p>
-            </div>
-        </div>
-    </section>
+    </main>
 
     <footer class="footer">
         <div class="container">
@@ -120,6 +111,6 @@
     </footer>
 
     <script src="js/main.js"></script>
-    <script src="js/blogs.js"></script>
+    <script src="js/blog-post.js"></script>
 </body>
 </html>

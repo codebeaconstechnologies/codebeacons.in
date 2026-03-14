@@ -1,16 +1,58 @@
 [
   {
     "id": "1",
-    "title": "Why Your Business Needs Cloud Solutions in 2025",
-    "image": "https://images.pexels.com/photos/1148820/pexels-photo-1148820.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "description": "Cloud technology is no longer optional for growing businesses. Learn how migrating to the cloud can improve scalability, security, and cost-efficiency for your organization.",
-    "date": "2025-01-15"
+    "slug": "the-rise-of-agentic-ai",
+    "title": "The Rise of Agentic AI",
+    "image": "https://images.pexels.com/photos/8386437/pexels-photo-8386437.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "description": "You know how most chatbots just answer one question and stop? Agentic AI is different—it actually plans, uses tools, and keeps going till the job is done. So instead of you asking ten times, it can go fetch data, run code, and come back with a full report. That's why we're seeing more of these \"AI agents\" for coding, research, and office work. If you're in IT or building software, it helps to know how this works, because this is where things are heading.",
+    "date": "2025-02-18"
   },
   {
     "id": "2",
-    "title": "5 Signs You Need Custom Software Development",
-    "image": "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "description": "Off-the-shelf tools can only take you so far. Discover when it's time to invest in bespoke software tailored to your unique business processes and goals.",
-    "date": "2025-01-10"
+    "slug": "artificial-intelligence-ai-tools",
+    "title": "Artificial Intelligence & AI Tools",
+    "image": "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "description": "There's a lot of AI tools out there now—not just chatbots but apps for writing, coding, design, and analysis. Companies have to choose: one big platform or different tools for different jobs like summarising docs, writing code, or making images. You also need to think about how it fits your current work, where your data stays, cost, and whether you're okay with cloud or want something on your own servers. Here we look at how to pick and use AI tools without ending up with too many overlapping ones.",
+    "date": "2025-02-16"
+  },
+  {
+    "id": "3",
+    "slug": "ai-model-comparisons",
+    "title": "AI Model Comparisons",
+    "image": "https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "description": "Which AI model should you use? It depends on what you need, your budget, and where your data can go. Open-source ones like Llama, Mistral, Qwen give you more control and you can keep everything in-house. The big APIs—GPT-4, Claude, Gemini—are strong on reasoning and long conversations. When you compare, look at how good it is on your kind of work, how fast it is, what it costs per use, and whether it can use tools or act as an agent. Benchmarks are useful but trying it on your own data matters more. We go through a simple way to compare and pick for your projects.",
+    "date": "2025-02-14"
+  },
+  {
+    "id": "4",
+    "slug": "ai-agents-autonomous-workflows",
+    "title": "AI Agents & Autonomous Workflows",
+    "image": "https://images.pexels.com/photos/7567443/pexels-photo-7567443.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "description": "AI agents are basically LLMs plus tools and memory—they can run whole workflows on their own, step by step, without you doing each bit. Think automated research, sorting tickets, reviewing code, or generating reports. To build one that actually works you need to break the task clearly, use tools safely, handle errors, and set some limits so the output stays in line. A lot of teams are moving from fixed scripts to these agent-style flows that adapt. Here we look at how to design them and plug them into your existing dev and ops setup.",
+    "date": "2025-02-12"
+  },
+  {
+    "id": "5",
+    "slug": "data-analytics-in-the-ai-era",
+    "title": "Data Analytics in the AI Era",
+    "image": "https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "description": "Analytics is changing because of AI. Now you can ask questions in plain English and get charts and summaries back. Data teams are mixing the old BI tools with these new AI interfaces so people don't need to write queries—they just ask. The tricky part is making sure the answers come from your real data and the AI doesn't make up numbers. You also need to control who can ask what. Here we talk about combining your existing pipelines and metrics with AI so you get faster, clearer decisions without losing trust in the data.",
+    "date": "2025-02-10"
+  },
+  {
+    "id": "6",
+    "slug": "generative-ai-applications",
+    "title": "Generative AI Applications",
+    "image": "https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "description": "Generative AI is showing up everywhere—text, code, images, voice. People use it for drafting documents, finishing code, creating test data, writing marketing copy, and localisation. What makes it work is being clear about what you want, good prompts or training data, and a human check where accuracy or brand really matters. We look at real use cases in software, content, and customer-facing work, and how to roll out these features in a sensible way with proper checks and feedback so things don't go off track.",
+    "date": "2025-02-08"
+  },
+  {
+    "id": "7",
+    "slug": "ai-in-software-development",
+    "title": "AI in Software Development",
+    "image": "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "description": "AI is everywhere in software development now—code completion, refactoring, writing tests, docs, and even looking at incidents. Developers use it to do routine coding faster, figure out APIs, and turn specs into actual code. It's also touching design (UI ideas), DevOps (reading logs, automating runbooks), and planning (estimates, backlog). To bring AI into your process you need to fit it into how you already work, always review the generated code for security and correctness, and get the team comfortable with prompting and tools. Here we go through what's possible today and how to use it without losing quality or control.",
+    "date": "2025-02-06"
   }
 ]

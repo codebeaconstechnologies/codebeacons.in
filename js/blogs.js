@@ -20,11 +20,14 @@
         if (blogEmptyEl) blogEmptyEl.style.display = 'none';
         blogs.forEach(function (blog) {
             const card = document.createElement('article');
-            card.className = 'blog-card fade-up';
+            card.className = 'blog-card fade-up visible';
             card.setAttribute('itemscope', '');
             card.setAttribute('itemtype', 'https://schema.org/BlogPosting');
             var dateStr = blog.date || '';
+            var slug = (blog.slug || blog.id || '').toString();
+            var postUrl = 'blog.html?slug=' + encodeURIComponent(slug);
             card.innerHTML =
+                '<a href="' + escapeHtml(postUrl) + '" class="blog-card-link">' +
                 '<div class="blog-card-image">' +
                 '<img src="' + escapeHtml(blog.image) + '" alt="' + escapeHtml(blog.title) + '" loading="lazy">' +
                 '</div>' +
@@ -32,8 +35,17 @@
                 (dateStr ? '<time class="blog-card-date" datetime="' + dateStr + '">' + formatDate(dateStr) + '</time>' : '') +
                 '<h3 class="blog-card-title" itemprop="headline">' + escapeHtml(blog.title) + '</h3>' +
                 '<p class="blog-card-description" itemprop="description">' + escapeHtml(blog.description) + '</p>' +
-                '</div>';
+                '</div>' +
+                '</a>';
             blogListEl.appendChild(card);
+            var link = card.querySelector('.blog-card-link');
+            if (link) {
+                link.addEventListener('click', function (e) {
+                    try {
+                        sessionStorage.setItem('blogCurrent', JSON.stringify(blog));
+                    } catch (err) {}
+                });
+            }
         });
     }
 
@@ -58,6 +70,9 @@
             .then(function (res) { return res.ok ? res.json() : []; })
             .then(function (data) {
                 blogs = Array.isArray(data) ? data : [];
+                try {
+                    sessionStorage.setItem('blogsList', JSON.stringify(blogs));
+                } catch (e) {}
                 renderBlogs();
             })
             .catch(function () {
