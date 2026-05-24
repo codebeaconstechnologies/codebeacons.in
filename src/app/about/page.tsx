@@ -10,15 +10,15 @@ import CoreValuesGrid from '@/components/about/CoreValuesGrid'
 export const metadata: Metadata = {
   title: 'About Us | Experienced IT & Software Development Team',
   description:
-    'Meet the team behind Code Beacons Technologies. Led by Bhikaji Patil, Senior Technical Lead with 10+ years of experience delivering enterprise software in Pune, India.',
+    'Meet the team behind Code Beacons Technologies — a senior-led engineering team delivering enterprise software, cloud solutions, and IT consulting in Pune, India.',
   alternates: { canonical: '/about' },
 }
 
 const milestones = [
-  { year: '2018', title: 'Founded in Pune', desc: 'Established to bridge the gap between technology and business value for Indian enterprises.' },
-  { year: '2020', title: 'Cloud Practice Launch', desc: 'Expanded into cloud consulting and migration as enterprises accelerated digital transformation.' },
-  { year: '2022', title: '30+ Clients Milestone', desc: 'Grew to serve clients across healthcare, finance, retail, and manufacturing sectors.' },
-  { year: '2024', title: 'AI & Analytics Division', desc: 'Launched a dedicated AI practice to help clients harness machine learning at scale.' },
+  { year: '01', title: 'Custom Software', desc: 'Full-stack web and enterprise applications built to your exact requirements.' },
+  { year: '02', title: 'Cloud Solutions', desc: 'Architecture, migration, and optimisation across AWS, Azure, and GCP.' },
+  { year: '03', title: 'IT Consulting', desc: 'Senior-led strategy and advisory to align technology with your business goals.' },
+  { year: '04', title: 'AI & Analytics', desc: 'Machine learning, data pipelines, and intelligent features that drive real decisions.' },
 ]
 
 const breadcrumbSchema = {
@@ -100,7 +100,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <FadeUp>
-              <SectionTag label="Our Journey" className="mb-5" />
+              <SectionTag label="What We Do" className="mb-5" />
               <h2 className="font-heading font-bold text-white text-3xl sm:text-4xl mb-5 leading-tight">
                 Built on Experience,{' '}
                 <span className="gradient-text">Driven by Results</span>
@@ -111,10 +111,10 @@ export default function AboutPage() {
                 engineers who understand business and take ownership of outcomes.
               </p>
               <p className="text-gray-400 leading-relaxed mb-6">
-                Led by <strong className="text-white">Bhikaji Patil</strong> — Senior Technical
-                Lead with a decade of enterprise engineering and leadership experience — our team
-                has grown into a full-service software development and consulting firm serving
-                clients across healthcare, finance, retail, and manufacturing.
+                Led by a Senior Technical Lead with a decade of enterprise engineering and
+                leadership experience, our team has grown into a full-service software
+                development and consulting firm serving clients across healthcare, finance,
+                retail, and manufacturing.
               </p>
               <div className="space-y-3">
                 {milestones.map((m) => (

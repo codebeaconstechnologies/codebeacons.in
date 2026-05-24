@@ -28,8 +28,7 @@ export default function AboutPreview() {
             </h2>
             <p className="text-gray-400 leading-relaxed mb-4">
               Code Beacons Technologies is a Pune-based software development and IT consulting firm
-              led by <strong className="text-white">Bhikaji Patil</strong>, Senior Technical Lead with
-              a decade of enterprise engineering experience. We combine senior leadership with a sharp,
+              led by a Senior Technical Lead with a decade of enterprise engineering experience. We combine senior leadership with a sharp,
               execution-focused team to deliver technology that genuinely moves the needle.
             </p>
             <p className="text-gray-400 leading-relaxed mb-7">
