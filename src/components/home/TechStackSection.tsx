@@ -6,52 +6,52 @@ import FadeUp from '@/components/ui/FadeUp'
 const stack = [
   {
     category: 'BACKEND',
-    color: 'text-primary',
+    color: 'text-teal-700',
     items: ['.NET 3.1–10', 'ASP.NET Core', 'C#', 'Entity Framework Core', 'Dapper', 'Clean Architecture', 'CQRS', 'MediatR', 'Hangfire', 'Node.js', 'REST', 'GraphQL'],
   },
   {
     category: 'AUTH & IDENTITY',
-    color: 'text-blue-400',
+    color: 'text-blue-700',
     items: ['OAuth 2.0', 'OIDC', 'SAML 2.0', 'PKCE', 'Azure AD / Entra ID', 'Auth0', 'Okta', 'Keycloak', 'IdentityServer4', 'Duende IdentityServer', 'JWT', 'MFA / TOTP', 'WebAuthn / FIDO2'],
   },
   {
     category: 'AZURE PLATFORM',
-    color: 'text-cyan-400',
+    color: 'text-cyan-800',
     items: ['Azure App Service', 'Azure Functions', 'Azure Service Bus', 'Azure Blob Storage', 'Azure SignalR', 'Azure API Management', 'Azure Key Vault', 'Azure Monitor', 'Application Insights', 'Container Apps', 'Azure OpenAI', 'Cosmos DB'],
   },
   {
     category: 'PAYMENTS',
-    color: 'text-green-400',
+    color: 'text-green-700',
     items: ['Stripe', 'Stripe Connect', 'Stripe Billing', 'PayPal REST', 'Braintree', 'Mollie', 'Adyen', 'GoCardless SEPA', 'Prime Trust', 'Synapse', 'Webhook idempotency', 'Payment reconciliation'],
   },
   {
     category: 'MESSAGING & COMMS',
-    color: 'text-purple-400',
+    color: 'text-purple-700',
     items: ['Twilio SMS', 'Twilio Voice', 'Twilio Verify OTP', 'Vonage / Nexmo', 'SendGrid', 'Mailgun', 'Azure Communication Services', 'Firebase FCM', 'RabbitMQ', 'Azure Service Bus', 'Dead-letter handling', 'Retry policies'],
   },
   {
     category: 'FRONTEND',
-    color: 'text-yellow-400',
+    color: 'text-amber-700',
     items: ['React 18', 'Next.js 14', 'TypeScript', 'Angular 16+', 'Tailwind CSS', 'Framer Motion', 'Zustand', 'React Query'],
   },
   {
     category: 'DATA & ANALYTICS',
-    color: 'text-orange-400',
+    color: 'text-orange-700',
     items: ['SQL Server 2016–2022', 'PostgreSQL', 'MongoDB', 'CosmosDB', 'LINQ', 'Stored Procedures', 'Query optimisation', 'Index tuning'],
   },
   {
     category: 'QA & TESTING',
-    color: 'text-red-400',
+    color: 'text-red-700',
     items: ['Playwright', 'Selenium', 'Cypress', 'k6', 'JMeter', 'OWASP ZAP', 'Manual testing', 'API testing'],
   },
   {
     category: 'DESIGN',
-    color: 'text-pink-400',
+    color: 'text-pink-700',
     items: ['Figma', 'Adobe XD', 'Design Systems', 'Responsive design', 'Wireframing', 'Prototyping', 'Developer handoff', 'Accessibility audit'],
   },
   {
     category: 'DEVOPS & CI/CD',
-    color: 'text-teal-400',
+    color: 'text-teal-700',
     items: ['Azure DevOps', 'GitHub Actions', 'Docker', 'Terraform', 'Kubernetes (AKS)', 'CI/CD pipelines', 'IIS', 'NGINX'],
   },
 ]

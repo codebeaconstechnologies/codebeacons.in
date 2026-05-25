@@ -80,7 +80,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               href="/contact"
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white font-semibold text-sm hover:bg-primary-dark transition-colors duration-200"
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-slate-900 font-semibold text-sm hover:bg-primary-dark transition-colors duration-200"
             >
               Get in Touch
             </Link>
@@ -124,7 +124,7 @@ export default function Navbar() {
               })}
               <Link
                 href="/contact"
-                className="mt-2 w-full text-center px-5 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-colors"
+                className="mt-2 w-full text-center px-5 py-3 rounded-lg bg-primary text-slate-900 font-semibold hover:bg-primary-dark transition-colors"
               >
                 Get in Touch
               </Link>

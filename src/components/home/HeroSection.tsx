@@ -182,7 +182,7 @@ export default function HeroSection() {
             >
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-primary text-white font-bold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-primary text-slate-900 font-bold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
               >
                 Let&apos;s talk about your project <ArrowRight size={18} />
               </Link>

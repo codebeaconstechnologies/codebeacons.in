@@ -196,7 +196,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={formState === 'submitting'}
-          className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-dark font-bold text-sm hover:bg-primary-dark disabled:opacity-60 disabled:cursor-not-allowed transition-colors shadow-lg shadow-primary/20"
+          className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-slate-900 font-bold text-sm hover:bg-primary-dark disabled:opacity-60 disabled:cursor-not-allowed transition-colors shadow-lg shadow-primary/20"
         >
           {formState === 'submitting' ? (
             <>

@@ -35,7 +35,7 @@ export default function Footer() {
               height={48}
               className="h-14 w-auto object-contain mb-4"
             />
-            <p className="text-primary font-medium text-sm mb-2">Lighting the Future of Technology</p>
+            <p className="text-teal-700 font-medium text-sm mb-2">Lighting the Future of Technology</p>
             <p className="text-slate-500 text-sm leading-relaxed mb-5">
               Empowering businesses with innovative software solutions and strategic IT consulting.
             </p>
@@ -127,7 +127,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-slate-100 pt-6 text-sm text-slate-400 text-center">
+        <div className="border-t border-slate-100 pt-6 text-sm text-slate-600 text-center">
           <p>&copy; {currentYear} Code Beacons Technologies. All Rights Reserved.</p>
         </div>
       </div>

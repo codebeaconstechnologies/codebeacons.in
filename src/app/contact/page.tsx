@@ -140,7 +140,7 @@ export default function ContactPage() {
                 </ul>
                 <a
                   href="mailto:hrteam@codebeacons.in?subject=Free Consultation Request"
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-slate-900 font-bold text-sm hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
                 >
                   <Mail size={16} /> Book via Email
                 </a>

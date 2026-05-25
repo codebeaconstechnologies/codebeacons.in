@@ -85,7 +85,7 @@ export default function CTASection() {
 
               <Link
                 href="/contact"
-                className="w-full inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-primary text-dark font-bold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20 mb-4"
+                className="w-full inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-primary text-slate-900 font-bold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20 mb-4"
               >
                 Book a free consultation <ArrowRight size={18} />
               </Link>

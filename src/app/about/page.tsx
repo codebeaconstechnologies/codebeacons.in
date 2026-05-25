@@ -328,7 +328,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-primary text-dark font-bold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-primary text-slate-900 font-bold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
               >
                 Book a free consultation <ArrowRight size={18} />
               </Link>
