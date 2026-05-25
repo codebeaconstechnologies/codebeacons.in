@@ -1,91 +1,128 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { CheckCircle2, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import SectionTag from '@/components/ui/SectionTag'
 import FadeUp from '@/components/ui/FadeUp'
 
-const highlights = [
-  '10+ years of combined software delivery experience',
-  'Senior-led team — every project gets expert attention',
-  'Transparent communication and agile delivery',
-  'End-to-end ownership: design, build, deploy, support',
+const profiles = [
+  {
+    initials: 'TL',
+    title: 'Technical Lead',
+    sub: '10+ yrs .NET & Azure',
+    badge: null,
+    badgeColor: '',
+    topColor: 'border-t-primary',
+    tags: ['.NET 3.1-10', 'Azure', 'SQL Server', 'Angular', 'OAuth2/SAML', 'Stripe'],
+  },
+  {
+    initials: 'BE',
+    title: 'Backend Engineer',
+    sub: 'Backend Specialist · Assessed · 8+ yrs',
+    badge: null,
+    badgeColor: '',
+    topColor: 'border-t-blue-400',
+    tags: ['ASP.NET Core', 'C#', 'EF Core', 'SQL Server', 'Stripe', 'Twilio'],
+  },
+  {
+    initials: 'FS',
+    title: 'Full-Stack Engineer',
+    sub: 'Full-Stack Specialist · Assessed · 7+ yrs',
+    badge: null,
+    badgeColor: '',
+    topColor: 'border-t-purple-400',
+    tags: ['React', 'Next.js', 'TypeScript', 'Angular', 'Azure AD', 'SignalR'],
+  },
+  {
+    initials: 'UX',
+    title: 'Product Designer',
+    sub: 'UI/UX · Specialist network',
+    badge: 'SPECIALIST',
+    badgeColor: 'bg-yellow-400/15 text-yellow-400 border-yellow-400/30',
+    topColor: 'border-t-yellow-400',
+    tags: ['Figma', 'Adobe XD', 'Design Systems', 'Responsive', 'Handoff-ready'],
+  },
+  {
+    initials: 'QA',
+    title: 'QA Engineer',
+    sub: 'Quality Assurance · Specialist network',
+    badge: 'SPECIALIST',
+    badgeColor: 'bg-orange-400/15 text-orange-400 border-orange-400/30',
+    topColor: 'border-t-orange-400',
+    tags: ['Playwright', 'Selenium', 'k6', 'OWASP ZAP', 'Performance', 'Security'],
+  },
 ]
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+}
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+}
 
 export default function AboutPreview() {
   return (
     <section className="section bg-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-14 items-center">
-          {/* Text */}
-          <FadeUp>
-            <SectionTag label="About Us" className="mb-5" />
-            <h2 className="font-heading font-bold text-white text-3xl sm:text-4xl lg:text-5xl mb-5 leading-tight">
-              A Team You Can{' '}
-              <span className="gradient-text">Build On</span>
-            </h2>
-            <p className="text-gray-400 leading-relaxed mb-4">
-              Code Beacons Technologies is a Pune-based software development and IT consulting firm
-              led by a Senior Technical Lead with a decade of enterprise engineering experience. We combine senior leadership with a sharp,
-              execution-focused team to deliver technology that genuinely moves the needle.
-            </p>
-            <p className="text-gray-400 leading-relaxed mb-7">
-              We work with startups, growth-stage companies, and enterprises — across healthcare,
-              finance, retail, and manufacturing — to turn complex technical challenges into clean,
-              scalable solutions.
-            </p>
-            <ul className="space-y-3 mb-8">
-              {highlights.map((point) => (
-                <li key={point} className="flex items-start gap-3 text-gray-300 text-sm">
-                  <CheckCircle2 size={18} className="text-primary flex-shrink-0 mt-0.5" />
-                  {point}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/about"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary/10 border border-primary/25 text-primary font-semibold hover:bg-primary/20 transition-colors"
-            >
-              Our Story <ArrowRight size={16} />
-            </Link>
-          </FadeUp>
+        <FadeUp className="mb-12">
+          <SectionTag label="Our Team" className="mb-4" />
+          <h2 className="font-heading font-bold text-slate-900 text-3xl sm:text-4xl lg:text-5xl mb-4">
+            Real engineers.{' '}
+            <span className="gradient-text">Real production experience.</span>
+          </h2>
+          <p className="text-slate-500 text-lg max-w-2xl">
+            Everyone in our team has been through a multi-stage technical review and has shipped
+            production systems on real enterprise projects — not just personal side-work.
+          </p>
+        </FadeUp>
 
-          {/* Image + floating cards */}
-          <FadeUp delay={0.15} className="relative">
-            <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
-              <Image
-                src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Code Beacons team collaborating"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent" />
-            </div>
-
-            {/* Floating stat card */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-10"
+        >
+          {profiles.map((p) => (
             <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
-              className="absolute -bottom-6 -left-6 bg-dark-2 border border-white/10 rounded-2xl px-5 py-4 shadow-2xl shadow-black/40"
+              key={p.initials}
+              variants={itemVariants}
+              className={`bg-dark-2 border border-slate-100 rounded-2xl p-5 border-t-2 ${p.topColor} hover:border-slate-200 transition-colors`}
             >
-              <div className="font-heading font-bold text-primary text-3xl">50+</div>
-              <div className="text-gray-400 text-xs mt-1">Projects Delivered</div>
+              <div className="flex items-start justify-between mb-4">
+                <div className="w-10 h-10 rounded-xl bg-dark-3 border border-slate-200 flex items-center justify-center font-heading font-bold text-sm text-slate-900 flex-shrink-0">
+                  {p.initials}
+                </div>
+                {p.badge && (
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border tracking-wider ${p.badgeColor}`}>
+                    {p.badge}
+                  </span>
+                )}
+              </div>
+              <div className="font-heading font-semibold text-slate-900 text-sm mb-0.5">{p.title}</div>
+              <div className="text-slate-400 text-xs mb-4 leading-relaxed">{p.sub}</div>
+              <div className="flex flex-wrap gap-1.5">
+                {p.tags.map((tag) => (
+                  <span key={tag} className="text-[11px] font-mono px-2 py-0.5 rounded bg-dark-3 border border-slate-100 text-slate-500">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </motion.div>
+          ))}
+        </motion.div>
 
-            {/* Floating badge */}
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut', delay: 1 }}
-              className="absolute -top-5 -right-4 bg-primary rounded-xl px-4 py-3 shadow-xl shadow-primary/20"
-            >
-              <div className="font-heading font-bold text-dark text-2xl">10+</div>
-              <div className="text-dark/70 text-xs">Years Exp.</div>
-            </motion.div>
-          </FadeUp>
-        </div>
+        <FadeUp>
+          <Link
+            href="/about"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary/10 border border-primary/25 text-primary font-semibold hover:bg-primary/20 transition-colors"
+          >
+            Learn how we assess our team <ArrowRight size={16} />
+          </Link>
+        </FadeUp>
       </div>
     </section>
   )

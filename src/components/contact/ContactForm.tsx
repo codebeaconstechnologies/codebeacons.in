@@ -74,8 +74,8 @@ export default function ContactForm() {
         <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-5">
           <CheckCircle2 size={32} className="text-primary" />
         </div>
-        <h3 className="font-heading font-semibold text-white text-2xl mb-3">Message Sent!</h3>
-        <p className="text-gray-400">
+        <h3 className="font-heading font-semibold text-slate-900 text-2xl mb-3">Message Sent!</h3>
+        <p className="text-slate-500">
           Thank you for reaching out. We'll review your enquiry and get back to you
           within 24 hours.
         </p>
@@ -84,9 +84,9 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="p-8 rounded-2xl bg-dark-2 border border-white/5">
-      <h3 className="font-heading font-semibold text-white text-xl mb-1">Send Us a Message</h3>
-      <p className="text-gray-400 text-sm mb-6">
+    <div className="p-8 rounded-2xl bg-dark-2 border border-slate-100">
+      <h3 className="font-heading font-semibold text-slate-900 text-xl mb-1">Send Us a Message</h3>
+      <p className="text-slate-500 text-sm mb-6">
         Fill out the form and we'll get back to you within one business day.
       </p>
 
@@ -107,7 +107,7 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} noValidate>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm text-gray-300 mb-1.5 font-medium">
+            <label className="block text-sm text-slate-600 mb-1.5 font-medium">
               First Name <span className="text-primary">*</span>
             </label>
             <input
@@ -115,13 +115,13 @@ export default function ContactForm() {
               name="firstName"
               value={fields.firstName}
               onChange={handleChange}
-              placeholder="Rajesh"
+              placeholder="James"
               required
-              className="w-full px-4 py-3 rounded-xl bg-dark border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors"
+              className="w-full px-4 py-3 rounded-xl bg-dark border border-slate-200 text-slate-900 placeholder-gray-600 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1.5 font-medium">
+            <label className="block text-sm text-slate-600 mb-1.5 font-medium">
               Last Name
             </label>
             <input
@@ -129,12 +129,12 @@ export default function ContactForm() {
               name="lastName"
               value={fields.lastName}
               onChange={handleChange}
-              placeholder="Kumar"
-              className="w-full px-4 py-3 rounded-xl bg-dark border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors"
+              placeholder="Smith"
+              className="w-full px-4 py-3 rounded-xl bg-dark border border-slate-200 text-slate-900 placeholder-gray-600 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1.5 font-medium">
+            <label className="block text-sm text-slate-600 mb-1.5 font-medium">
               Email <span className="text-primary">*</span>
             </label>
             <input
@@ -142,13 +142,13 @@ export default function ContactForm() {
               name="email"
               value={fields.email}
               onChange={handleChange}
-              placeholder="rajesh@company.com"
+              placeholder="james@company.com"
               required
-              className="w-full px-4 py-3 rounded-xl bg-dark border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors"
+              className="w-full px-4 py-3 rounded-xl bg-dark border border-slate-200 text-slate-900 placeholder-gray-600 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1.5 font-medium">
+            <label className="block text-sm text-slate-600 mb-1.5 font-medium">
               Phone
             </label>
             <input
@@ -156,19 +156,19 @@ export default function ContactForm() {
               name="phone"
               value={fields.phone}
               onChange={handleChange}
-              placeholder="+91 98765 43210"
-              className="w-full px-4 py-3 rounded-xl bg-dark border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors"
+              placeholder="+44 7700 900123"
+              className="w-full px-4 py-3 rounded-xl bg-dark border border-slate-200 text-slate-900 placeholder-gray-600 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors"
             />
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm text-gray-300 mb-1.5 font-medium">
+            <label className="block text-sm text-slate-600 mb-1.5 font-medium">
               Service Interested In
             </label>
             <select
               name="service"
               value={fields.service}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-xl bg-dark border border-white/10 text-white text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors appearance-none"
+              className="w-full px-4 py-3 rounded-xl bg-dark border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors appearance-none"
             >
               {serviceOptions.map((opt) => (
                 <option key={opt.value} value={opt.value} className="bg-dark-2">
@@ -178,7 +178,7 @@ export default function ContactForm() {
             </select>
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm text-gray-300 mb-1.5 font-medium">
+            <label className="block text-sm text-slate-600 mb-1.5 font-medium">
               Message <span className="text-primary">*</span>
             </label>
             <textarea
@@ -188,7 +188,7 @@ export default function ContactForm() {
               rows={5}
               placeholder="Tell us about your project, goals, or the problem you're looking to solve..."
               required
-              className="w-full px-4 py-3 rounded-xl bg-dark border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors resize-none"
+              className="w-full px-4 py-3 rounded-xl bg-dark border border-slate-200 text-slate-900 placeholder-gray-600 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors resize-none"
             />
           </div>
         </div>

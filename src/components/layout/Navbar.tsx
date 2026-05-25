@@ -26,9 +26,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [pathname])
+  useEffect(() => { setMenuOpen(false) }, [pathname])
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
@@ -39,20 +37,20 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled || menuOpen
-          ? 'bg-dark/95 backdrop-blur-md shadow-lg shadow-black/20 border-b border-white/5'
-          : 'bg-transparent'
+          ? 'bg-white/95 backdrop-blur-md shadow-sm shadow-slate-200 border-b border-slate-100'
+          : 'bg-white border-b border-slate-100'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo */}
+        <nav className="flex items-center justify-between h-20 lg:h-24">
+          {/* Logo — no filter needed on light background */}
           <Link href="/" className="flex-shrink-0">
             <Image
               src="/images/logo.png"
               alt="Code Beacons Technologies"
               width={160}
               height={48}
-              className="h-10 w-auto object-contain"
+              className="h-14 w-auto object-contain"
               priority
             />
           </Link>
@@ -60,8 +58,7 @@ export default function Navbar() {
           {/* Desktop nav */}
           <ul className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
-              const isActive =
-                link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
+              const isActive = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
               return (
                 <li key={link.href}>
                   <Link
@@ -69,7 +66,7 @@ export default function Navbar() {
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
                       isActive
                         ? 'text-primary bg-primary/10'
-                        : 'text-gray-300 hover:text-white hover:bg-white/5'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
                     {link.label}
@@ -83,13 +80,13 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               href="/contact"
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-dark font-semibold text-sm hover:bg-primary-dark transition-colors duration-200"
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white font-semibold text-sm hover:bg-primary-dark transition-colors duration-200"
             >
               Get in Touch
             </Link>
             <button
               onClick={() => setMenuOpen((v) => !v)}
-              className="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
+              className="md:hidden p-2 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
               aria-label="Toggle menu"
             >
               {menuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -106,12 +103,11 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden bg-dark-2/98 backdrop-blur-md border-t border-white/5 overflow-hidden"
+            className="md:hidden bg-white border-t border-slate-100 overflow-hidden"
           >
             <div className="px-4 py-6 flex flex-col gap-2">
               {navLinks.map((link) => {
-                const isActive =
-                  link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
+                const isActive = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
                 return (
                   <Link
                     key={link.href}
@@ -119,7 +115,7 @@ export default function Navbar() {
                     className={`px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                       isActive
                         ? 'text-primary bg-primary/10'
-                        : 'text-gray-300 hover:text-white hover:bg-white/5'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
                     {link.label}
@@ -128,7 +124,7 @@ export default function Navbar() {
               })}
               <Link
                 href="/contact"
-                className="mt-2 w-full text-center px-5 py-3 rounded-lg bg-primary text-dark font-semibold hover:bg-primary-dark transition-colors"
+                className="mt-2 w-full text-center px-5 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-colors"
               >
                 Get in Touch
               </Link>

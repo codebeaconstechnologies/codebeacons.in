@@ -93,18 +93,18 @@ export default function BlogPostPage({ params }: Props) {
       <section className="relative pt-36 pb-12 bg-dark overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-dark to-dark pointer-events-none" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
+          <nav className="flex items-center gap-2 text-sm text-slate-400 mb-6">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
             <span>/</span>
             <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
             <span>/</span>
-            <span className="text-gray-400 truncate max-w-xs">{post.title}</span>
+            <span className="text-slate-500 truncate max-w-xs">{post.title}</span>
           </nav>
-          <div className="flex items-center gap-2 text-gray-500 text-sm mb-5">
+          <div className="flex items-center gap-2 text-slate-400 text-sm mb-5">
             <Calendar size={14} />
             <time dateTime={post.date}>{formatDate(post.date)}</time>
           </div>
-          <h1 className="font-heading font-bold text-white text-3xl sm:text-4xl lg:text-5xl leading-tight">
+          <h1 className="font-heading font-bold text-slate-900 text-3xl sm:text-4xl lg:text-5xl leading-tight">
             {post.title}
           </h1>
         </div>
@@ -132,7 +132,7 @@ export default function BlogPostPage({ params }: Props) {
         />
 
         {/* Back link */}
-        <div className="mt-14 pt-8 border-t border-white/5">
+        <div className="mt-14 pt-8 border-t border-slate-100">
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 text-primary font-medium hover:underline"

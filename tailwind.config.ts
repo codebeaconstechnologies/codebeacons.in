@@ -15,9 +15,9 @@ const config: Config = {
           light: '#1A5276',
         },
         dark: {
-          DEFAULT: '#0A0F1C',
-          2: '#111827',
-          3: '#1F2937',
+          DEFAULT: '#ffffff',
+          2: '#f8fafc',
+          3: '#f1f5f9',
         },
       },
       fontFamily: {

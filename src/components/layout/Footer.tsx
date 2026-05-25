@@ -23,7 +23,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-dark-2 border-t border-white/5">
+    <footer className="bg-dark-2 border-t border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
@@ -33,10 +33,10 @@ export default function Footer() {
               alt="Code Beacons Technologies"
               width={160}
               height={48}
-              className="h-10 w-auto object-contain mb-4"
+              className="h-14 w-auto object-contain mb-4"
             />
             <p className="text-primary font-medium text-sm mb-2">Lighting the Future of Technology</p>
-            <p className="text-gray-400 text-sm leading-relaxed mb-5">
+            <p className="text-slate-500 text-sm leading-relaxed mb-5">
               Empowering businesses with innovative software solutions and strategic IT consulting.
             </p>
             <div className="flex gap-3">
@@ -45,7 +45,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/30 transition-colors"
+                className="w-9 h-9 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-500 hover:text-primary hover:border-primary/30 transition-colors"
               >
                 <Linkedin size={16} />
               </a>
@@ -54,7 +54,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/30 transition-colors"
+                className="w-9 h-9 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-500 hover:text-primary hover:border-primary/30 transition-colors"
               >
                 <Instagram size={16} />
               </a>
@@ -63,13 +63,13 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Quick Links</h4>
+            <h4 className="text-slate-900 font-semibold text-sm mb-4 uppercase tracking-wider">Quick Links</h4>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 text-sm hover:text-primary transition-colors flex items-center gap-1 group"
+                    className="text-slate-500 text-sm hover:text-primary transition-colors flex items-center gap-1 group"
                   >
                     <ArrowUpRight
                       size={13}
@@ -84,13 +84,13 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Services</h4>
+            <h4 className="text-slate-900 font-semibold text-sm mb-4 uppercase tracking-wider">Services</h4>
             <ul className="space-y-2.5">
               {serviceLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 text-sm hover:text-primary transition-colors flex items-center gap-1 group"
+                    className="text-slate-500 text-sm hover:text-primary transition-colors flex items-center gap-1 group"
                   >
                     <ArrowUpRight
                       size={13}
@@ -105,19 +105,19 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Contact Info</h4>
+            <h4 className="text-slate-900 font-semibold text-sm mb-4 uppercase tracking-wider">Contact Info</h4>
             <ul className="space-y-4">
               <li>
                 <a
                   href="mailto:hrteam@codebeacons.in"
-                  className="flex items-start gap-3 text-gray-400 text-sm hover:text-primary transition-colors group"
+                  className="flex items-start gap-3 text-slate-500 text-sm hover:text-primary transition-colors group"
                 >
                   <Mail size={16} className="mt-0.5 flex-shrink-0 text-primary" />
                   <span>hrteam@codebeacons.in</span>
                 </a>
               </li>
               <li>
-                <div className="flex items-start gap-3 text-gray-400 text-sm">
+                <div className="flex items-start gap-3 text-slate-500 text-sm">
                   <MapPin size={16} className="mt-0.5 flex-shrink-0 text-primary" />
                   <span>15/3 Pandhare Wasti,<br />Punawale, Pune, Maharashtra</span>
                 </div>
@@ -127,12 +127,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-500">
+        <div className="border-t border-slate-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-400">
           <p>&copy; {currentYear} Code Beacons Technologies. All Rights Reserved.</p>
           <p>
             Built with{' '}
             <span className="text-primary">♥</span>{' '}
-            in Pune, India
+            by our team
           </p>
         </div>
       </div>

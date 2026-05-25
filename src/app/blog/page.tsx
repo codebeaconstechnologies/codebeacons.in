@@ -22,17 +22,17 @@ export default function BlogListPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-accent/30 via-dark to-dark pointer-events-none" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeUp>
-            <nav className="flex justify-center items-center gap-2 text-sm text-gray-500 mb-6">
+            <nav className="flex justify-center items-center gap-2 text-sm text-slate-400 mb-6">
               <Link href="/" className="hover:text-primary transition-colors">Home</Link>
               <span>/</span>
-              <span className="text-gray-300">Blog</span>
+              <span className="text-slate-600">Blog</span>
             </nav>
             <SectionTag label="Insights" className="mb-5" />
-            <h1 className="font-heading font-bold text-white text-4xl sm:text-5xl lg:text-6xl mb-5 leading-tight">
+            <h1 className="font-heading font-bold text-slate-900 text-4xl sm:text-5xl lg:text-6xl mb-5 leading-tight">
               Insights &{' '}
               <span className="gradient-text">Tech Updates</span>
             </h1>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-slate-500 text-lg max-w-2xl mx-auto">
               Practical perspectives on software development, AI, cloud, and technology
               strategy — written by our team to help you make better technology decisions.
             </p>

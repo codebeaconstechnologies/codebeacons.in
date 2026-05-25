@@ -55,13 +55,13 @@ export default function CoreValuesGrid() {
           <motion.div
             key={value.title}
             variants={itemVariants}
-            className="p-7 rounded-2xl bg-dark border border-white/5 hover:border-primary/20 transition-colors text-center"
+            className="p-7 rounded-2xl bg-dark border border-slate-100 hover:border-primary/20 transition-colors text-center"
           >
             <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-5">
               <Icon size={22} className="text-primary" />
             </div>
-            <h3 className="font-heading font-semibold text-white text-lg mb-3">{value.title}</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">{value.description}</p>
+            <h3 className="font-heading font-semibold text-slate-900 text-lg mb-3">{value.title}</h3>
+            <p className="text-slate-500 text-sm leading-relaxed">{value.description}</p>
           </motion.div>
         )
       })}

@@ -7,15 +7,9 @@
   --primary-dark: #089B97;
   --primary-light: #00D4AA;
   --accent: #0D3B66;
-  --dark: #0A0F1C;
-  --dark-2: #111827;
-  --dark-3: #1F2937;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
+  --dark: #ffffff;
+  --dark-2: #f8fafc;
+  --dark-3: #f1f5f9;
 }
 
 * {
@@ -29,8 +23,8 @@ html {
 }
 
 body {
-  background-color: var(--dark);
-  color: #e5e7eb;
+  background-color: #ffffff;
+  color: #1e293b;
   font-family: var(--font-inter), system-ui, sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
@@ -38,7 +32,7 @@ body {
 
 /* Gradient text utility */
 .gradient-text {
-  background: linear-gradient(135deg, #0ABAB5 0%, #00D4AA 50%, #60a5fa 100%);
+  background: linear-gradient(135deg, #0ABAB5 0%, #089B97 60%, #0D3B66 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -49,7 +43,7 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--dark);
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--primary);
@@ -63,14 +57,14 @@ body {
 
 /* Prose overrides for blog content */
 .prose {
-  --tw-prose-body: #d1d5db;
-  --tw-prose-headings: #f9fafb;
+  --tw-prose-body: #475569;
+  --tw-prose-headings: #0f172a;
   --tw-prose-links: #0ABAB5;
-  --tw-prose-bold: #f9fafb;
-  --tw-prose-quotes: #9ca3af;
+  --tw-prose-bold: #0f172a;
+  --tw-prose-quotes: #64748b;
   --tw-prose-quote-borders: #0ABAB5;
   --tw-prose-code: #0ABAB5;
-  --tw-prose-pre-bg: #1F2937;
+  --tw-prose-pre-bg: #f1f5f9;
   --tw-prose-bullets: #0ABAB5;
   --tw-prose-counters: #0ABAB5;
 }
