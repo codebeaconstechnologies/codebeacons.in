@@ -119,7 +119,7 @@ export default function Footer() {
               <li>
                 <div className="flex items-start gap-3 text-slate-500 text-sm">
                   <MapPin size={16} className="mt-0.5 flex-shrink-0 text-primary" />
-                  <span>15/3 Pandhare Wasti,<br />Punawale, Pune, Maharashtra</span>
+                  <span>Pimpri Chinchwad,<br />Pune, Maharashtra</span>
                 </div>
               </li>
             </ul>
@@ -127,13 +127,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-slate-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-400">
+        <div className="border-t border-slate-100 pt-6 text-sm text-slate-400 text-center">
           <p>&copy; {currentYear} Code Beacons Technologies. All Rights Reserved.</p>
-          <p>
-            Built with{' '}
-            <span className="text-primary">♥</span>{' '}
-            by our team
-          </p>
         </div>
       </div>
     </footer>

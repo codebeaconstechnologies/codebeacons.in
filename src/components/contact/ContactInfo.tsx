@@ -31,8 +31,8 @@ export default function ContactInfo() {
           <div>
             <h4 className="text-slate-900 font-semibold mb-1">Visit Us</h4>
             <p className="text-slate-500 text-sm leading-relaxed">
-              15/3 Pandhare Wasti,<br />
-              Punawale, Pune, Maharashtra
+              Pimpri Chinchwad,<br />
+              Pune, Maharashtra
             </p>
           </div>
         </div>

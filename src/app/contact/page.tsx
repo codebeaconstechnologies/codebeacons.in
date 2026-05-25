@@ -9,7 +9,7 @@ import ContactInfo from '@/components/contact/ContactInfo'
 export const metadata: Metadata = {
   title: 'Contact Us | Get a Free Consultation — Code Beacons',
   description:
-    'Contact Code Beacons Technologies for a free software development consultation. Reach us at hrteam@codebeacons.in or visit us in Punawale, Pune. Response within 24 hours.',
+    'Contact Code Beacons Technologies for a free software development consultation. Reach us at hrteam@codebeacons.in or visit us in Pimpri Chinchwad, Pune. Response within 24 hours.',
   alternates: { canonical: '/contact' },
 }
 
@@ -30,7 +30,7 @@ const localBusinessSchema = {
   email: 'hrteam@codebeacons.in',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '15/3 Pandhare Wasti, Punawale',
+    streetAddress: 'Pimpri Chinchwad',
     addressLocality: 'Pune',
     addressRegion: 'Maharashtra',
     addressCountry: 'IN',
@@ -181,14 +181,14 @@ export default function ContactPage() {
           <FadeUp>
             <div className="rounded-2xl overflow-hidden border border-slate-100 h-72">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.2!2d73.74!3d18.63!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sPunawale%2C%20Pune!5e0!3m2!1sen!2sin!4v1700000000000"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121055.06548499293!2d73.72152865!3d18.6279156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9e760000001%3A0x2b56f7b1c42e8f0!2sPimpri-Chinchwad%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000001"
                 width="100%"
                 height="100%"
                 style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.8) contrast(1.1)' }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Code Beacons Technologies Location — Punawale, Pune"
+                title="Code Beacons Technologies Location — Pimpri Chinchwad, Pune"
               />
             </div>
           </FadeUp>

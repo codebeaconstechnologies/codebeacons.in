@@ -88,7 +88,7 @@ const organizationSchema = {
   email: 'hrteam@codebeacons.in',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '15/3 Pandhare Wasti, Punawale',
+    streetAddress: 'Pimpri Chinchwad',
     addressLocality: 'Pune',
     addressRegion: 'Maharashtra',
     addressCountry: 'IN',
