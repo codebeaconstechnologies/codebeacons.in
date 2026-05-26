@@ -1,9 +1,17 @@
-# *
+# robots.txt — Code Beacons Technologies
+# https://codebeacons.in
+
 User-agent: *
 Allow: /
+
+# Block internal Next.js & API routes
+Disallow: /api/
+Disallow: /_next/
+Disallow: /404
+Disallow: /500
 
 # Host
 Host: https://codebeacons.in
 
-# Sitemaps
+# Sitemap
 Sitemap: https://codebeacons.in/sitemap.xml
