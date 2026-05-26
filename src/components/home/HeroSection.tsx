@@ -52,53 +52,104 @@ export default function HeroSection() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const resize = () => {
-      canvas.width = section.offsetWidth
-      canvas.height = section.offsetHeight
-    }
-    resize()
-    window.addEventListener('resize', resize)
+    const GRID = 60
 
-    interface Particle { x: number; y: number; vx: number; vy: number; radius: number; opacity: number }
-    const particles: Particle[] = Array.from({ length: 45 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      radius: Math.random() * 1.5 + 0.5,
-      opacity: Math.random() * 0.25 + 0.08,
-    }))
+    interface GridTraveler {
+      fromCol: number; fromRow: number
+      toCol: number;   toRow: number
+      progress: number; speed: number
+      opacity: number;  size: number
+    }
+
+    let travelers: GridTraveler[] = []
+
+    const maxCol = () => Math.floor(canvas.width / GRID)
+    const maxRow = () => Math.floor(canvas.height / GRID)
+
+    const nextCell = (fromCol: number, fromRow: number, toCol: number, toRow: number) => {
+      const dCol = toCol - fromCol
+      const dRow = toRow - fromRow
+      const mc = maxCol(); const mr = maxRow()
+      const opts: Array<[number, number]> = []
+      // Straight: 3× weight so travelers run long before turning
+      const nc = toCol + dCol; const nr = toRow + dRow
+      if (nc >= 0 && nc <= mc && nr >= 0 && nr <= mr) {
+        opts.push([dCol, dRow], [dCol, dRow], [dCol, dRow])
+      }
+      // Perpendicular turns
+      if (dCol !== 0) {
+        if (toRow > 0)  opts.push([0, -1])
+        if (toRow < mr) opts.push([0,  1])
+      } else {
+        if (toCol > 0)  opts.push([-1, 0])
+        if (toCol < mc) opts.push([ 1, 0])
+      }
+      if (opts.length === 0) return { col: fromCol, row: fromRow }
+      const [dc, dr] = opts[Math.floor(Math.random() * opts.length)]
+      return { col: toCol + dc, row: toRow + dr }
+    }
+
+    const initAll = () => {
+      canvas.width  = section.offsetWidth
+      canvas.height = section.offsetHeight
+      const mc = maxCol(); const mr = maxRow()
+      travelers = Array.from({ length: 22 }, () => {
+        const fromCol = Math.floor(Math.random() * mc)
+        const fromRow = Math.floor(Math.random() * mr)
+        const horiz   = Math.random() > 0.5
+        const toCol   = horiz ? Math.min(mc, Math.max(0, fromCol + (Math.random() > 0.5 ? 1 : -1))) : fromCol
+        const toRow   = horiz ? fromRow : Math.min(mr, Math.max(0, fromRow + (Math.random() > 0.5 ? 1 : -1)))
+        return {
+          fromCol, fromRow, toCol, toRow,
+          progress: Math.random(),
+          speed:    Math.random() * 0.010 + 0.004,
+          opacity:  Math.random() * 0.55 + 0.35,
+          size:     Math.random() * 1.6  + 1.4,
+        }
+      })
+    }
+
+    initAll()
+    window.addEventListener('resize', initAll)
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      particles.forEach((p) => {
-        p.x += p.vx; p.y += p.vy
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1
+
+      travelers.forEach((t) => {
+        t.progress += t.speed
+        if (t.progress >= 1) {
+          const n = nextCell(t.fromCol, t.fromRow, t.toCol, t.toRow)
+          t.fromCol = t.toCol; t.fromRow = t.toRow
+          t.toCol   = n.col;   t.toRow   = n.row
+          t.progress = 0
+          t.speed = Math.random() * 0.010 + 0.004
+        }
+
+        const x1 = t.fromCol * GRID; const y1 = t.fromRow * GRID
+        const x2 = t.toCol   * GRID; const y2 = t.toRow   * GRID
+        const px = x1 + (x2 - x1) * t.progress
+        const py = y1 + (y2 - y1) * t.progress
+
+        // Soft glow halo
+        const grd = ctx.createRadialGradient(px, py, 0, px, py, t.size * 5)
+        grd.addColorStop(0, `rgba(10, 186, 181, ${t.opacity * 0.45})`)
+        grd.addColorStop(1, 'rgba(10, 186, 181, 0)')
         ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(10, 186, 181, ${p.opacity})`
+        ctx.arc(px, py, t.size * 5, 0, Math.PI * 2)
+        ctx.fillStyle = grd
+        ctx.fill()
+
+        // Bright core
+        ctx.beginPath()
+        ctx.arc(px, py, t.size, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(10, 186, 181, ${t.opacity})`
         ctx.fill()
       })
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x
-          const dy = particles[i].y - particles[j].y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 100) {
-            ctx.beginPath()
-            ctx.moveTo(particles[i].x, particles[i].y)
-            ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `rgba(10, 186, 181, ${0.07 * (1 - dist / 100)})`
-            ctx.lineWidth = 0.5
-            ctx.stroke()
-          }
-        }
-      }
+
       animFrameRef.current = requestAnimationFrame(draw)
     }
     draw()
-    return () => { window.removeEventListener('resize', resize); cancelAnimationFrame(animFrameRef.current) }
+    return () => { window.removeEventListener('resize', initAll); cancelAnimationFrame(animFrameRef.current) }
   }, [])
 
   return (
