@@ -8,6 +8,11 @@ node_modules/
 /.next/
 /out/
 
+# OpenNext / Cloudflare Workers
+/.open-next/
+/.wrangler/
+.dev.vars
+
 # production
 /build
 
