@@ -312,6 +312,38 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Internal navigation — cross-links to services & blog */}
+      <section className="py-12 bg-dark-2 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap justify-center gap-4 text-sm">
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-primary/25 text-primary font-semibold hover:bg-primary/10 transition-colors"
+            >
+              Explore our services <ArrowRight size={15} />
+            </Link>
+            <Link
+              href="/services#software"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:border-primary/25 hover:text-primary transition-colors"
+            >
+              Custom Software Development
+            </Link>
+            <Link
+              href="/services#cloud"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:border-primary/25 hover:text-primary transition-colors"
+            >
+              Cloud Solutions
+            </Link>
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:border-primary/25 hover:text-primary transition-colors"
+            >
+              Read our blog
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Consultation CTA */}
       <section className="section bg-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

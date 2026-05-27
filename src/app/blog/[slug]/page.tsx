@@ -6,7 +6,7 @@ import { Calendar, ArrowLeft } from 'lucide-react'
 import { getBlogPosts, getBlogBySlug, formatDate } from '@/lib/blogs'
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -14,7 +14,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = getBlogBySlug(params.slug)
+  const { slug } = await params
+  const post = getBlogBySlug(slug)
   if (!post) return { title: 'Post Not Found' }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://codebeacons.in'
@@ -40,8 +41,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function BlogPostPage({ params }: Props) {
-  const post = getBlogBySlug(params.slug)
+export default async function BlogPostPage({ params }: Props) {
+  const { slug } = await params
+  const post = getBlogBySlug(slug)
   if (!post) notFound()
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://codebeacons.in'

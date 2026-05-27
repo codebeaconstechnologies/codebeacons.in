@@ -153,10 +153,24 @@ export default function ServicesPage() {
               Technology Solutions{' '}
               <span className="gradient-text">That Deliver</span>
             </h1>
-            <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+            <p className="text-slate-500 text-lg max-w-2xl mx-auto mb-6">
               Every service we offer is built around one goal: making your business
               measurably better. No fluff. Just proven technology, delivered by experts.
             </p>
+            <div className="flex flex-wrap justify-center gap-3 text-sm">
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-slate-200 text-slate-500 hover:border-primary/30 hover:text-primary transition-colors"
+              >
+                Meet the team →
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-semibold hover:bg-primary/20 transition-colors"
+              >
+                Book a free consultation →
+              </Link>
+            </div>
           </FadeUp>
         </div>
       </section>

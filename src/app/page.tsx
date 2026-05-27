@@ -4,6 +4,7 @@ import ServicesPreview from '@/components/home/ServicesPreview'
 import AboutPreview from '@/components/home/AboutPreview'
 import TechStackSection from '@/components/home/TechStackSection'
 import ProcessSection from '@/components/home/ProcessSection'
+import FAQSection from '@/components/home/FAQSection'
 import CTASection from '@/components/home/CTASection'
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function Home() {
       <AboutPreview />
       <TechStackSection />
       <ProcessSection />
+      <FAQSection />
       <CTASection />
     </>
   )
