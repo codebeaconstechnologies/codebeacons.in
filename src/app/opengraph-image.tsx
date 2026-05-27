@@ -75,17 +75,20 @@ export default async function Image() {
         {/* Title */}
         <div
           style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 14,
             fontSize: 58,
             fontWeight: 800,
             color: '#ffffff',
-            textAlign: 'center',
             lineHeight: 1.15,
             marginBottom: 20,
             maxWidth: 900,
           }}
         >
-          Software Development
-          {' '}
+          <span>Software Development</span>
           <span style={{ color: '#0ABAB5' }}>That Delivers</span>
         </div>
 
