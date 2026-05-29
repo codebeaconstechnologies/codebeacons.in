@@ -46,6 +46,9 @@ export default function HeroSection() {
   const opacity = useTransform(scrollY, [0, 400], [1, 0])
 
   useEffect(() => {
+    // Skip canvas on mobile — decorative only, not worth the CPU cost
+    if (window.innerWidth < 768) return
+
     const canvas = canvasRef.current
     const section = sectionRef.current
     if (!canvas || !section) return
@@ -53,6 +56,7 @@ export default function HeroSection() {
     if (!ctx) return
 
     const GRID = 60
+    let paused = false
 
     interface GridTraveler {
       fromCol: number; fromRow: number
@@ -71,12 +75,10 @@ export default function HeroSection() {
       const dRow = toRow - fromRow
       const mc = maxCol(); const mr = maxRow()
       const opts: Array<[number, number]> = []
-      // Straight: 3× weight so travelers run long before turning
       const nc = toCol + dCol; const nr = toRow + dRow
       if (nc >= 0 && nc <= mc && nr >= 0 && nr <= mr) {
         opts.push([dCol, dRow], [dCol, dRow], [dCol, dRow])
       }
-      // Perpendicular turns
       if (dCol !== 0) {
         if (toRow > 0)  opts.push([0, -1])
         if (toRow < mr) opts.push([0,  1])
@@ -93,7 +95,7 @@ export default function HeroSection() {
       canvas.width  = section.offsetWidth
       canvas.height = section.offsetHeight
       const mc = maxCol(); const mr = maxRow()
-      travelers = Array.from({ length: 22 }, () => {
+      travelers = Array.from({ length: 14 }, () => {
         const fromCol = Math.floor(Math.random() * mc)
         const fromRow = Math.floor(Math.random() * mr)
         const horiz   = Math.random() > 0.5
@@ -112,7 +114,12 @@ export default function HeroSection() {
     initAll()
     window.addEventListener('resize', initAll)
 
+    const onVisibilityChange = () => { paused = document.hidden }
+    document.addEventListener('visibilitychange', onVisibilityChange)
+
     const draw = () => {
+      animFrameRef.current = requestAnimationFrame(draw)
+      if (paused) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       travelers.forEach((t) => {
@@ -130,7 +137,6 @@ export default function HeroSection() {
         const px = x1 + (x2 - x1) * t.progress
         const py = y1 + (y2 - y1) * t.progress
 
-        // Soft glow halo
         const grd = ctx.createRadialGradient(px, py, 0, px, py, t.size * 5)
         grd.addColorStop(0, `rgba(10, 186, 181, ${t.opacity * 0.45})`)
         grd.addColorStop(1, 'rgba(10, 186, 181, 0)')
@@ -139,17 +145,18 @@ export default function HeroSection() {
         ctx.fillStyle = grd
         ctx.fill()
 
-        // Bright core
         ctx.beginPath()
         ctx.arc(px, py, t.size, 0, Math.PI * 2)
         ctx.fillStyle = `rgba(10, 186, 181, ${t.opacity})`
         ctx.fill()
       })
-
-      animFrameRef.current = requestAnimationFrame(draw)
     }
     draw()
-    return () => { window.removeEventListener('resize', initAll); cancelAnimationFrame(animFrameRef.current) }
+    return () => {
+      window.removeEventListener('resize', initAll)
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+      cancelAnimationFrame(animFrameRef.current)
+    }
   }, [])
 
   return (
