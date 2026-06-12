@@ -5,6 +5,7 @@ module.exports = {
   changefreq: 'weekly',
   priority: 0.7,
   sitemapSize: 7000,
+  exclude: ['/opengraph-image', '/opengraph-image*'],
   robotsTxtOptions: {
     policies: [
       { userAgent: '*', allow: '/' },
