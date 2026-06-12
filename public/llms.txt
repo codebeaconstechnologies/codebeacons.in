@@ -1,0 +1,36 @@
+# Code Beacons Technologies
+
+> Senior-led software development, .NET & Azure engineering, and IT consulting company based in Pune, India.
+
+Code Beacons Technologies is a software development company in Pune, Maharashtra, India. Every client engagement is led by an engineer with 10+ years of production experience. Junior engineers are not assigned to client work.
+
+## What we do
+
+- Custom software development (.NET, React, Next.js, Node.js)
+- Cloud architecture and Azure solutions
+- Mobile app development (iOS, Android, React Native)
+- Database design, performance audits, and migration
+- Dedicated developer placement (one or more assessed engineers integrated into your team)
+- IT consulting and technology strategy for startups and enterprises
+
+## Who we work with
+
+Growth-stage startups, mid-sized product companies, and enterprise teams in fintech, edtech, healthcare, and SaaS sectors. Clients in India and internationally.
+
+## Location
+
+Pimpri Chinchwad, Pune, Maharashtra 411018, India
+
+## Contact
+
+- Website: https://codebeacons.in
+- Email: hrteam@codebeacons.in
+- LinkedIn: https://www.linkedin.com/company/code-beacons-technologies
+
+## Pages
+
+- [Home](https://codebeacons.in)
+- [Services](https://codebeacons.in/services)
+- [About](https://codebeacons.in/about)
+- [Blog](https://codebeacons.in/blog)
+- [Contact](https://codebeacons.in/contact)

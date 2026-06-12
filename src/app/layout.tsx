@@ -114,6 +114,54 @@ const websiteSchema = {
   },
 }
 
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'ProfessionalService'],
+  name: 'Code Beacons Technologies',
+  url: siteUrl,
+  logo: `${siteUrl}/images/logo.png`,
+  image: `${siteUrl}/images/og-default.png`,
+  description:
+    'Senior-led software development, .NET & Azure engineering, and IT consulting in Pune, India. Every project is led by a 10+ year engineer.',
+  email: 'hrteam@codebeacons.in',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Pimpri Chinchwad',
+    addressLocality: 'Pune',
+    addressRegion: 'Maharashtra',
+    postalCode: '411018',
+    addressCountry: 'IN',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 18.6279,
+    longitude: 73.7997,
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Pune' },
+    { '@type': 'Country', name: 'India' },
+  ],
+  serviceType: [
+    'Custom Software Development',
+    '.NET Development',
+    'Azure Cloud Solutions',
+    'React and Next.js Development',
+    'Mobile App Development',
+    'IT Consulting',
+    'Dedicated Developer Placement',
+  ],
+  knowsAbout: [
+    '.NET', 'Azure', 'React', 'Next.js', 'Node.js',
+    'Software Architecture', 'Cloud Computing', 'Mobile Development',
+  ],
+  foundingDate: '2014',
+  numberOfEmployees: { '@type': 'QuantitativeValue', minValue: 10, maxValue: 50 },
+  sameAs: [
+    'https://www.linkedin.com/company/code-beacons-technologies',
+    'https://www.instagram.com/codebeacons',
+  ],
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -129,6 +177,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
       </head>
       <body className="antialiased">
