@@ -2,6 +2,10 @@
 User-agent: *
 Allow: /
 
+# *
+User-agent: *
+Disallow: /CBT-*
+
 # Host
 Host: https://codebeacons.in
 

@@ -5,10 +5,11 @@ module.exports = {
   changefreq: 'weekly',
   priority: 0.7,
   sitemapSize: 7000,
-  exclude: ['/opengraph-image', '/opengraph-image*'],
+  exclude: ['/opengraph-image', '/opengraph-image*', '/CBT-*'],
   robotsTxtOptions: {
     policies: [
       { userAgent: '*', allow: '/' },
+      { userAgent: '*', disallow: '/CBT-*' },
     ],
   },
 }

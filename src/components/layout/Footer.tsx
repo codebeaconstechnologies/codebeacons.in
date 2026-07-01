@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Linkedin, Instagram, Mail, MapPin, ArrowUpRight } from 'lucide-react'
+import { Linkedin, Instagram, Mail, MapPin, Phone, ArrowUpRight } from 'lucide-react'
 
 const quickLinks = [
   { href: '/', label: 'Home' },

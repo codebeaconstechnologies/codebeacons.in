@@ -1,0 +1,24 @@
+[
+  {
+    "id": "CBT-INT-2026-RHT4",
+    "internName": "Atharva Kulkarni",
+    "role": "Trainee Software Engineer (Intern)",
+    "startDate": "2026-02-23",
+    "endDate": "2026-06-22",
+    "issueDate": "2026-06-30",
+    "fileType": "image",
+    "fileUrl": "/certificates/CBT-INT-2026-RHT4.jpg",
+    "status": "valid"
+  },
+  {
+    "id": "CBT-INT-2026-CDY6",
+    "internName": "Om Suryawanshi",
+    "role": "Trainee Software Engineer (Intern)",
+    "startDate": "2026-03-03",
+    "endDate": "2026-06-30",
+    "issueDate": "2026-06-30",
+    "fileType": "image",
+    "fileUrl": "/certificates/CBT-INT-2026-CDY6.jpg",
+    "status": "valid"
+  }
+]
