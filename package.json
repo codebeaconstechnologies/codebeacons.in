@@ -20,7 +20,6 @@
     "lucide-react": "^0.400.0",
     "next": "^15",
     "next-sitemap": "^4",
-    "pdf-lib": "^1.17.1",
     "react": "^19",
     "react-dom": "^19",
     "resend": "^3"
