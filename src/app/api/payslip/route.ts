@@ -14,13 +14,29 @@ type PayslipBody = {
   lop?: number | string
 }
 
+type PayslipKv = {
+  put(
+    key: string,
+    value: ArrayBuffer | Uint8Array | string,
+    options?: { expirationTtl?: number },
+  ): Promise<void>
+}
+
+async function getKv(): Promise<PayslipKv | null> {
+  try {
+    const { getCloudflareContext } = await import('@opennextjs/cloudflare')
+    const { env } = await getCloudflareContext({ async: true })
+    return (env as { EMPLOYEES?: PayslipKv } | undefined)?.EMPLOYEES ?? null
+  } catch {
+    return null
+  }
+}
+
 async function parseBody(req: NextRequest): Promise<PayslipBody> {
   const contentType = req.headers.get('content-type') || ''
-
   if (contentType.includes('application/json')) {
     return (await req.json()) as PayslipBody
   }
-
   const form = await req.formData()
   return {
     token: String(form.get('token') || ''),
@@ -88,11 +104,30 @@ export async function POST(req: NextRequest) {
     })
 
     const bytes = Uint8Array.from(pdf)
+    const kv = await getKv()
+
+    // Prefer a short-lived GET download URL (normal browser file download).
+    if (kv) {
+      const id = crypto.randomUUID()
+      await kv.put(`payslip-file:${id}`, bytes, { expirationTtl: 180 })
+      await kv.put(
+        `payslip-meta:${id}`,
+        JSON.stringify({ fileName, token }),
+        { expirationTtl: 180 },
+      )
+      const origin = new URL(req.url).origin
+      return NextResponse.json({
+        downloadUrl: `${origin}/api/payslip/file?id=${encodeURIComponent(id)}`,
+        fileName,
+      })
+    }
+
+    // Local/dev fallback: return PDF bytes directly.
     return new NextResponse(bytes, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${fileName}"; filename*=UTF-8''${encodeURIComponent(fileName)}`,
+        'Content-Disposition': `attachment; filename="${fileName}"`,
         'Content-Length': String(bytes.byteLength),
         'Cache-Control': 'no-store',
         'X-Content-Type-Options': 'nosniff',
