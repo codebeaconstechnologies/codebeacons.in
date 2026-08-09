@@ -54,8 +54,8 @@ export default function EmployeeGrid({ employees, onChange }: EmployeeGridProps)
     try {
       const employee: Employee = {
         id: editingId ?? createEmployeeId(),
-        ...form,
         name: form.name.trim(),
+        joiningDate: form.joiningDate.trim(),
         designation: form.designation.trim(),
         bankName: form.bankName.trim(),
         accountNo: form.accountNo.trim(),

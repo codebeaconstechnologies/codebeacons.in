@@ -1,19 +1,31 @@
 import { createHash } from 'node:crypto'
 import { NextRequest } from 'next/server'
 
-export const ADMIN_USERNAME = 'admin'
-export const ADMIN_PASSWORD = 'Arnika@250221'
+function getAdminUsername(): string {
+  return process.env.ADMIN_USERNAME?.trim() || ''
+}
+
+function getAdminPassword(): string {
+  return process.env.ADMIN_PASSWORD || ''
+}
 
 export function getAdminToken(): string {
-  return createHash('sha256').update(`codebeacons-admin:${ADMIN_PASSWORD}`).digest('hex')
+  const password = getAdminPassword()
+  if (!password) return ''
+  return createHash('sha256').update(`codebeacons-admin:${password}`).digest('hex')
 }
 
 export function verifyAdminCredentials(username: string, password: string): boolean {
-  return username === ADMIN_USERNAME && password === ADMIN_PASSWORD
+  const expectedUser = getAdminUsername()
+  const expectedPass = getAdminPassword()
+  if (!expectedUser || !expectedPass) return false
+  return username === expectedUser && password === expectedPass
 }
 
 export function assertAdminRequest(req: NextRequest): boolean {
+  const expectedToken = getAdminToken()
+  if (!expectedToken) return false
   const header = req.headers.get('authorization') || ''
   const token = header.startsWith('Bearer ') ? header.slice(7).trim() : ''
-  return Boolean(token) && token === getAdminToken()
+  return Boolean(token) && token === expectedToken
 }
