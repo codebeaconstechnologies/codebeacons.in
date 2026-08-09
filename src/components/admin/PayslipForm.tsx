@@ -1,24 +1,25 @@
 'use client'
 
 import { FormEvent, useMemo, useState } from 'react'
-import { Download } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Printer } from 'lucide-react'
 import type { Employee } from '@/types/employee'
 import { MONTHS } from '@/types/employee'
 import { getAdminTokenClient } from '@/lib/employees'
+import { PAYSLIP_DRAFT_KEY } from '@/lib/payslip-calc'
 
 interface PayslipFormProps {
   employees: Employee[]
 }
 
 export default function PayslipForm({ employees }: PayslipFormProps) {
+  const router = useRouter()
   const [employeeId, setEmployeeId] = useState('')
   const [month, setMonth] = useState(() => String(new Date().getMonth() + 1))
   const [year, setYear] = useState(() => String(new Date().getFullYear()))
   const [amount, setAmount] = useState('')
   const [workDays, setWorkDays] = useState('')
   const [lop, setLop] = useState('0')
-  const [busy, setBusy] = useState(false)
-  const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
   const years = useMemo(() => {
@@ -26,9 +27,8 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
     return Array.from({ length: 6 }, (_, i) => current - 2 + i)
   }, [])
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setMessage('')
     setError('')
 
     const employee = employees.find((item) => item.id === employeeId)
@@ -59,54 +59,19 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
       return
     }
 
-    try {
-      setBusy(true)
-
-      // Generate via Chromium on the server, then open a real PDF URL.
-      const response = await fetch('/api/payslip', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          employeeId,
-          month: Number(month),
-          year: Number(year),
-          amount: parsedAmount,
-          workDays: parsedWorkDays,
-          lop: parsedLop,
-        }),
-      })
-
-      if (!response.ok) {
-        const data = (await response.json().catch(() => null)) as
-          | { error?: string; detail?: string }
-          | null
-        throw new Error(data?.detail || data?.error || 'Failed to generate payslip')
-      }
-
-      const data = (await response.json()) as { downloadUrl?: string; fileName?: string }
-      if (!data.downloadUrl) throw new Error('Download URL missing')
-
-      // Real same-origin PDF URL with Content-Disposition: attachment (not a JS blob).
-      const url = data.downloadUrl.includes('?')
-        ? `${data.downloadUrl}&download=1`
-        : `${data.downloadUrl}?download=1`
-
-      const frame = document.createElement('iframe')
-      frame.style.display = 'none'
-      frame.src = url
-      document.body.appendChild(frame)
-      window.setTimeout(() => frame.remove(), 60_000)
-
-      setMessage(`Downloading ${data.fileName || 'payslip'}…`)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate payslip')
-    } finally {
-      setBusy(false)
-    }
+    // Print / Save as PDF — no binary file download (avoids Chrome virus false positives).
+    sessionStorage.setItem(
+      PAYSLIP_DRAFT_KEY,
+      JSON.stringify({
+        employee,
+        month: Number(month),
+        year: Number(year),
+        amount: parsedAmount,
+        workDays: parsedWorkDays,
+        lop: parsedLop,
+      }),
+    )
+    router.push('/admin/payslip')
   }
 
   return (
@@ -114,9 +79,9 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
       <div className="mb-4">
         <h2 className="text-lg font-semibold text-slate-900">Generate Salary Slip</h2>
         <p className="text-sm text-slate-500">
-          Select employee, month/year, and credited amount. Downloads a portrait A4 PDF on the new
-          Code Beacons letterhead (Chromium-generated). Earnings: Basic 40%, HRA 20%, LTA 5%, Special
-          Allowance 28%, Travel 7%.
+          Select employee, month/year, and credited amount. Opens a letterhead preview — use{' '}
+          <strong>Print / Save as PDF</strong> (no virus warning). Earnings: Basic 40%, HRA 20%, LTA 5%,
+          Special Allowance 28%, Travel 7%.
         </p>
       </div>
 
@@ -212,16 +177,15 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
         <div className="sm:col-span-2 lg:col-span-3 flex flex-wrap items-center gap-3 pt-2">
           <button
             type="submit"
-            disabled={busy || employees.length === 0}
+            disabled={employees.length === 0}
             className="inline-flex items-center gap-2 rounded-lg bg-primary text-white px-4 py-2.5 text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
           >
-            <Download size={16} />
-            {busy ? 'Generating PDF…' : 'Download PDF'}
+            <Printer size={16} />
+            Preview &amp; Print
           </button>
           {employees.length === 0 ? (
             <span className="text-sm text-amber-700">Add at least one employee first.</span>
           ) : null}
-          {message ? <span className="text-sm text-emerald-700">{message}</span> : null}
           {error ? <span className="text-sm text-red-600">{error}</span> : null}
         </div>
       </form>
