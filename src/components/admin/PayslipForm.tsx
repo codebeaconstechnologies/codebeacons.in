@@ -4,7 +4,7 @@ import { FormEvent, useMemo, useState } from 'react'
 import { Download } from 'lucide-react'
 import type { Employee } from '@/types/employee'
 import { MONTHS } from '@/types/employee'
-import { generatePayslipPdf } from '@/lib/generate-payslip'
+import { getAdminTokenClient } from '@/lib/employees'
 
 interface PayslipFormProps {
   employees: Employee[]
@@ -26,7 +26,7 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
     return Array.from({ length: 6 }, (_, i) => current - 2 + i)
   }, [])
 
-  async function handleSubmit(event: FormEvent) {
+  function handleSubmit(event: FormEvent) {
     event.preventDefault()
     setMessage('')
     setError('')
@@ -40,7 +40,12 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
     const parsedAmount = Number(amount)
     const parsedWorkDays = Number(workDays)
     const parsedLop = Number(lop)
+    const token = getAdminTokenClient()
 
+    if (!token) {
+      setError('Session expired. Please log in again.')
+      return
+    }
     if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
       setError('Enter a valid salary amount')
       return
@@ -56,15 +61,38 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
 
     try {
       setBusy(true)
-      await generatePayslipPdf({
-        employee,
-        month: Number(month),
-        year: Number(year),
-        amount: parsedAmount,
-        workDays: parsedWorkDays,
-        lop: parsedLop,
+
+      // Navigate-based form POST download (same-origin HTTP response).
+      // Avoids Chrome Safe Browsing false positives on client-side blob PDFs.
+      const form = document.createElement('form')
+      form.method = 'POST'
+      form.action = '/api/payslip'
+      form.target = '_blank'
+      form.style.display = 'none'
+
+      const fields: Record<string, string> = {
+        token,
+        employeeId,
+        month,
+        year,
+        amount: String(parsedAmount),
+        workDays: String(parsedWorkDays),
+        lop: String(parsedLop),
+      }
+
+      Object.entries(fields).forEach(([name, value]) => {
+        const input = document.createElement('input')
+        input.type = 'hidden'
+        input.name = name
+        input.value = value
+        form.appendChild(input)
       })
-      setMessage('Payslip PDF downloaded successfully.')
+
+      document.body.appendChild(form)
+      form.submit()
+      form.remove()
+
+      setMessage('Payslip download started. If a new tab opened, use Save there.')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate payslip')
     } finally {

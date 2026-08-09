@@ -5,6 +5,8 @@ Allow: /
 # *
 User-agent: *
 Disallow: /CBT-*
+Disallow: /admin
+Disallow: /api
 
 # Host
 Host: https://codebeacons.in

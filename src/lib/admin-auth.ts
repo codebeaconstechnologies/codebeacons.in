@@ -22,10 +22,14 @@ export function verifyAdminCredentials(username: string, password: string): bool
   return username === expectedUser && password === expectedPass
 }
 
-export function assertAdminRequest(req: NextRequest): boolean {
+export function isValidAdminToken(token: string | null | undefined): boolean {
   const expectedToken = getAdminToken()
-  if (!expectedToken) return false
+  if (!expectedToken || !token) return false
+  return token === expectedToken
+}
+
+export function assertAdminRequest(req: NextRequest): boolean {
   const header = req.headers.get('authorization') || ''
   const token = header.startsWith('Bearer ') ? header.slice(7).trim() : ''
-  return Boolean(token) && token === expectedToken
+  return isValidAdminToken(token)
 }

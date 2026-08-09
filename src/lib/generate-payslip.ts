@@ -1,3 +1,5 @@
+import { promises as fs } from 'fs'
+import path from 'path'
 import { jsPDF } from 'jspdf'
 import {
   EARNING_BREAKDOWN,
@@ -25,18 +27,32 @@ function sanitizeFilePart(value: string): string {
   return value.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_|_$/g, '')
 }
 
-async function loadBackgroundDataUrl(): Promise<string> {
-  const response = await fetch('/images/payslip-bg.png')
-  if (!response.ok) {
-    throw new Error('Failed to load payslip background')
+function bytesToDataUrl(bytes: Uint8Array, mime: 'image/jpeg' | 'image/png'): string {
+  return `data:${mime};base64,${Buffer.from(bytes).toString('base64')}`
+}
+
+async function loadBackgroundDataUrl(origin?: string): Promise<string> {
+  // Prefer JPEG — more standard in PDFs and less likely to trip AV heuristics.
+  try {
+    const jpgPath = path.join(process.cwd(), 'public', 'images', 'payslip-bg.jpg')
+    const bytes = await fs.readFile(jpgPath)
+    return bytesToDataUrl(bytes, 'image/jpeg')
+  } catch {
+    // Cloudflare Workers: public assets are not on disk — fetch from the site origin.
   }
-  const blob = await response.blob()
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () => resolve(reader.result as string)
-    reader.onerror = () => reject(new Error('Failed to read background image'))
-    reader.readAsDataURL(blob)
-  })
+
+  if (origin) {
+    const response = await fetch(new URL('/images/payslip-bg.jpg', origin))
+    if (response.ok) {
+      return bytesToDataUrl(new Uint8Array(await response.arrayBuffer()), 'image/jpeg')
+    }
+    const pngResponse = await fetch(new URL('/images/payslip-bg.png', origin))
+    if (pngResponse.ok) {
+      return bytesToDataUrl(new Uint8Array(await pngResponse.arrayBuffer()), 'image/png')
+    }
+  }
+
+  throw new Error('Failed to load payslip background')
 }
 
 /** Baseline for vertically centered text inside a row. */
@@ -44,7 +60,15 @@ function rowTextY(rowTop: number, rowHeight: number): number {
   return rowTop + rowHeight * 0.68
 }
 
-export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
+export function getPayslipFileName(input: Pick<PayslipInput, 'employee' | 'month' | 'year'>): string {
+  const monthName = MONTHS[input.month - 1]
+  return `Payslip_${sanitizeFilePart(monthName)}_${input.year}_${sanitizeFilePart(input.employee.name)}.pdf`
+}
+
+export async function buildPayslipPdf(
+  input: PayslipInput,
+  options?: { origin?: string },
+): Promise<{ pdf: Uint8Array; fileName: string }> {
   const { employee, month, year, amount, workDays, lop } = input
   const monthName = MONTHS[month - 1]
   const days = daysInMonth(month, year)
@@ -61,15 +85,20 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
   const totalAmount = earnings.reduce((sum, row) => sum + row.amount, 0)
   const netPay = Math.round(totalAmount)
 
-  const bg = await loadBackgroundDataUrl()
-  const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' })
+  const bg = await loadBackgroundDataUrl(options?.origin)
+  const isJpeg = bg.startsWith('data:image/jpeg')
+  const doc = new jsPDF({
+    orientation: 'landscape',
+    unit: 'mm',
+    format: 'a4',
+    compress: true,
+  })
   const pageW = doc.internal.pageSize.getWidth()
   const pageH = doc.internal.pageSize.getHeight()
 
-  doc.addImage(bg, 'PNG', 0, 0, pageW, pageH)
+  doc.addImage(bg, isJpeg ? 'JPEG' : 'PNG', 0, 0, pageW, pageH)
 
   const marginX = 14
-  // Just below the header rule under the logo (clear of the line, no large gap).
   const contentTop = 40
   const contentBottom = pageH - 12
   const contentW = pageW - marginX * 2
@@ -77,7 +106,6 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
   const midX = marginX + contentW / 2
   const padX = 3.5
 
-  // Title
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(12)
   doc.setTextColor(25, 25, 25)
@@ -85,7 +113,6 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
     align: 'center',
   })
 
-  // ── Employee details ──────────────────────────────────────────────
   const detailY = contentTop + 4
   const detailRows = 5
   const detailRowH = 7.2
@@ -108,7 +135,6 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
     ['', ''],
   ]
 
-  // Soft row separators first, then outer frame
   for (let i = 1; i < detailRows; i += 1) {
     const y = detailY + i * detailRowH
     doc.setDrawColor(210, 210, 210)
@@ -147,7 +173,6 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
     doc.text(`:  ${value || '-'}`, midX + padX + labelW, y)
   })
 
-  // ── Earnings / Deductions table ───────────────────────────────────
   const tableY = detailY + detailH + 5
   const headerH = 7.5
   const dataRowCount = Math.max(earnings.length, 4)
@@ -182,16 +207,13 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
     doc.rect(marginX, tableY, contentW, tableH)
   }
 
-  // Header fill
   doc.setFillColor(248, 250, 252)
   doc.rect(marginX, tableY, contentW, headerH, 'F')
 
-  // Totals fill
   const totalTop = tableY + headerH + dataRowCount * dataRowH
   doc.setFillColor(248, 250, 252)
   doc.rect(marginX, totalTop, contentW, totalRowH, 'F')
 
-  // Horizontal separators
   doc.setDrawColor(210, 210, 210)
   doc.setLineWidth(0.12)
   for (let i = 0; i < dataRowCount; i += 1) {
@@ -205,7 +227,6 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
 
   drawTableGrid()
 
-  // Header labels
   const headerTextY = rowTextY(tableY, headerH)
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(9)
@@ -216,7 +237,6 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
   doc.text('Deductions', dedLeft + padX, headerTextY)
   doc.text('Amount', dedAmountX + dedAmountW / 2, headerTextY, { align: 'center' })
 
-  // Earnings rows (deductions stay blank)
   earnings.forEach((row, i) => {
     const rowTop = tableY + headerH + i * dataRowH
     const textY = rowTextY(rowTop, dataRowH)
@@ -228,7 +248,6 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
     doc.text(formatINR(row.amount), dedLeft - padX, textY, { align: 'right' })
   })
 
-  // Totals
   const totalTextY = rowTextY(totalTop, totalRowH)
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(9)
@@ -239,7 +258,6 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
   doc.text('Total Deductions', dedLeft + padX, totalTextY)
   doc.text('0.00', contentRight - padX, totalTextY, { align: 'right' })
 
-  // ── Net pay ───────────────────────────────────────────────────────
   const netBlockTop = tableY + tableH + 5
   const netBlockH = 14
 
@@ -260,7 +278,6 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
   doc.setTextColor(55, 55, 55)
   doc.text(`(${amountInWords(netPay)})`, marginX + padX, rowTextY(netBlockTop + 7.5, 6.5))
 
-  // Footer note
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(7.5)
   doc.setTextColor(110, 110, 110)
@@ -271,6 +288,7 @@ export async function generatePayslipPdf(input: PayslipInput): Promise<void> {
     { align: 'center' },
   )
 
-  const fileName = `Payslip_${sanitizeFilePart(monthName)}_${year}_${sanitizeFilePart(employee.name)}.pdf`
-  doc.save(fileName)
+  const fileName = getPayslipFileName(input)
+  const pdf = doc.output('arraybuffer')
+  return { pdf: new Uint8Array(pdf), fileName }
 }
