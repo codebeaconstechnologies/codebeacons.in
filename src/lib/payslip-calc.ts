@@ -50,24 +50,52 @@ function sanitizeFilePart(value: string): string {
   return value.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_|_$/g, '')
 }
 
+/** Match displayed payslip money (2 decimal places). */
+function money(value: number): number {
+  return Math.round(value * 100) / 100
+}
+
 export function buildPayslipViewModel(input: PayslipInput): PayslipViewModel {
   const { employee, month, year, amount, workDays, lop } = input
   const monthName = MONTHS[month - 1]
   const days = daysInMonth(month, year)
   const safeWorkDays = workDays > 0 ? workDays : days
-  const masterTotal = amount * (days / safeWorkDays)
 
-  const earnings = EARNING_BREAKDOWN.map((item) => ({
-    label: item.label,
-    master: formatINR(masterTotal * item.percent),
-    amount: formatINR(amount * item.percent),
-  }))
+  // Master = full-month equivalent of the credited amount.
+  // Amount / Net Pay stay tied to salary credited for the period.
+  const creditedTotal = money(amount)
+  const masterBase = money(creditedTotal * (days / safeWorkDays))
 
-  const totalMaster = earnings.reduce(
-    (sum, row, index) => sum + masterTotal * EARNING_BREAKDOWN[index].percent,
-    0,
-  )
-  const totalAmount = amount
+  const earningRows = EARNING_BREAKDOWN.map((item) => {
+    const masterValue = money(masterBase * item.percent)
+    const amountValue = money(creditedTotal * item.percent)
+    return {
+      label: item.label,
+      masterValue,
+      amountValue,
+      master: formatINR(masterValue),
+      amount: formatINR(amountValue),
+    }
+  })
+
+  // Absorb 2-decimal rounding drift into the last component so row sums
+  // match the source totals (do not derive totals from rounded rows).
+  if (earningRows.length > 0) {
+    const last = earningRows[earningRows.length - 1]
+    const masterHead = money(
+      earningRows.slice(0, -1).reduce((sum, row) => sum + row.masterValue, 0),
+    )
+    const amountHead = money(
+      earningRows.slice(0, -1).reduce((sum, row) => sum + row.amountValue, 0),
+    )
+    last.masterValue = money(masterBase - masterHead)
+    last.amountValue = money(creditedTotal - amountHead)
+    last.master = formatINR(last.masterValue)
+    last.amount = formatINR(last.amountValue)
+  }
+
+  const totalMaster = masterBase
+  const totalAmount = creditedTotal
   const netPay = Math.round(totalAmount)
 
   return {
@@ -78,7 +106,11 @@ export function buildPayslipViewModel(input: PayslipInput): PayslipViewModel {
     lop,
     employee,
     joinDateLabel: formatDate(employee.joiningDate),
-    earnings,
+    earnings: earningRows.map(({ label, master, amount: amt }) => ({
+      label,
+      master,
+      amount: amt,
+    })),
     totalMaster: formatINR(totalMaster),
     totalAmount: formatINR(totalAmount),
     netPay,
