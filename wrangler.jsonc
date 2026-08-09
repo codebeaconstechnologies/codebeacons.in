@@ -13,5 +13,12 @@
       "binding": "WORKER_SELF_REFERENCE",
       "service": "codebeacons"
     }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "EMPLOYEES",
+      "id": "a1374667456f4cf290a03a78e39919e2",
+      "preview_id": "bf8bef9de59c44a8831eb0ce8509fc41"
+    }
   ]
 }

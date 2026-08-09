@@ -1,3 +1,11 @@
+try {
+  // Enables Cloudflare bindings (KV) during local Next.js development.
+  const { initOpenNextCloudflareForDev } = require('@opennextjs/cloudflare')
+  initOpenNextCloudflareForDev()
+} catch {
+  // Ignore when the package is unavailable in some tooling contexts.
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {

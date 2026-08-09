@@ -127,8 +127,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-slate-100 pt-6 text-sm text-slate-600 text-center">
+        <div className="border-t border-slate-100 pt-6 text-sm text-slate-600 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
           <p>&copy; {currentYear} Code Beacons Technologies. All Rights Reserved.</p>
+          <Link
+            href="/admin"
+            className="text-[8px] uppercase tracking-widest text-slate-400/30 hover:text-slate-400/50 transition-colors"
+          >
+            admin
+          </Link>
         </div>
       </div>
     </footer>

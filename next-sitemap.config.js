@@ -5,11 +5,18 @@ module.exports = {
   changefreq: 'weekly',
   priority: 0.7,
   sitemapSize: 7000,
-  exclude: ['/opengraph-image', '/opengraph-image*', '/CBT-*'],
+  exclude: [
+    '/opengraph-image',
+    '/opengraph-image*',
+    '/CBT-*',
+    '/admin',
+    '/admin/*',
+    '/api/*',
+  ],
   robotsTxtOptions: {
     policies: [
       { userAgent: '*', allow: '/' },
-      { userAgent: '*', disallow: '/CBT-*' },
+      { userAgent: '*', disallow: ['/CBT-*', '/admin', '/api'] },
     ],
   },
 }
