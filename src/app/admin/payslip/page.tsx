@@ -82,7 +82,7 @@ export default function AdminPayslipPrintPage() {
   return (
     <div className="min-h-screen bg-slate-200">
       <div className="cb-print-toolbar sticky top-0 z-10 border-b border-slate-300 bg-white px-4 py-3 print:hidden">
-        <div className="mx-auto flex max-w-[297mm] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mx-auto flex max-w-[210mm] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <Link
             href="/admin"
             className="inline-flex items-center gap-1.5 text-sm text-slate-600 hover:text-primary"
@@ -92,7 +92,7 @@ export default function AdminPayslipPrintPage() {
           </Link>
 
           <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-950 sm:max-w-xl">
-            <p className="font-semibold mb-1">To remove date, URL &amp; page number from the PDF:</p>
+            <p className="font-semibold mb-1">Save without Chrome date/URL footer:</p>
             <ol className="list-decimal pl-4 space-y-0.5">
               <li>
                 Destination → <strong>Save as PDF</strong>
@@ -101,10 +101,13 @@ export default function AdminPayslipPrintPage() {
                 More settings → Margins → <strong>None</strong>
               </li>
               <li>
+                Turn on <strong>Background graphics</strong>
+              </li>
+              <li>
                 Uncheck <strong>Headers and footers</strong>
               </li>
               <li>
-                Save — file name will be{' '}
+                Save as{' '}
                 <code className="rounded bg-white px-1">{model.fileTitle}.pdf</code>
               </li>
             </ol>
@@ -116,7 +119,7 @@ export default function AdminPayslipPrintPage() {
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90"
           >
             <Printer size={16} />
-            Save as PDF
+            Print / Save as PDF
           </button>
         </div>
       </div>
@@ -127,13 +130,15 @@ export default function AdminPayslipPrintPage() {
 
       <style>{`
         @page {
-          size: A4 landscape;
+          size: A4 portrait;
           margin: 0;
         }
         @media print {
           html, body {
             margin: 0 !important;
             background: #fff !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
           }
           .cb-print-toolbar {
             display: none !important;

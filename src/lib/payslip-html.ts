@@ -9,7 +9,7 @@ function escapeHtml(value: string): string {
     .replace(/"/g, '&quot;')
 }
 
-/** Portrait A4 HTML used by Cloudflare Browser Rendering → real Chromium PDF. */
+/** Portrait A4 HTML used by Cloudflare Browser Rendering → Chromium PDF. */
 export function renderPayslipHtml(model: PayslipViewModel): string {
   const { employee } = model
   const bg = `data:image/jpeg;base64,${PAYSLIP_BG_JPEG_BASE64}`
@@ -42,13 +42,32 @@ export function renderPayslipHtml(model: PayslipViewModel): string {
       height: 297mm;
       font-family: Arial, Helvetica, sans-serif;
       color: #1a1a1a;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      background: #fff;
     }
     .sheet {
+      position: relative;
       width: 210mm;
       height: 297mm;
-      background: #fff url('${bg}') center top / 100% 100% no-repeat;
+      overflow: hidden;
+      background: #fff;
+    }
+    /* Real <img> letterhead — CSS backgrounds are often dropped in print/PDF */
+    .letterhead {
+      position: absolute;
+      inset: 0;
+      width: 210mm;
+      height: 297mm;
+      object-fit: fill;
+      z-index: 0;
+      pointer-events: none;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .content {
+      position: relative;
+      z-index: 1;
       padding: 42mm 12mm 12mm;
     }
     h1 {
@@ -63,23 +82,24 @@ export function renderPayslipHtml(model: PayslipViewModel): string {
       font-size: 10px;
       margin-bottom: 4mm;
       border: 0.35mm solid #282828;
-      background: rgba(255,255,255,0.92);
+      background: transparent;
     }
     td, th {
-      border: 0.12mm solid #d0d0d0;
+      border: 0.12mm solid rgba(40, 40, 40, 0.45);
       padding: 2.1mm 2.2mm;
       vertical-align: middle;
+      background: transparent;
     }
     .label { font-weight: 700; width: 18%; color: #2d2d2d; }
     .value { width: 32%; }
-    thead th { background: #f8fafc; font-weight: 700; text-align: left; }
+    thead th { font-weight: 700; text-align: left; }
     .num { text-align: right; white-space: nowrap; }
-    .totals td { font-weight: 700; background: #f8fafc; }
+    .totals td { font-weight: 700; }
     .net {
       border: 0.3mm solid #282828;
       padding: 2.4mm 3mm;
       margin-bottom: 8mm;
-      background: rgba(255,255,255,0.92);
+      background: transparent;
     }
     .net-row {
       display: flex;
@@ -103,70 +123,73 @@ export function renderPayslipHtml(model: PayslipViewModel): string {
 </head>
 <body>
   <div class="sheet">
-    <h1>Payslip for the month of ${escapeHtml(model.monthName)} ${model.year}</h1>
-    <table>
-      <tbody>
-        <tr>
-          <td class="label">Name</td>
-          <td class="value">: ${escapeHtml(employee.name)}</td>
-          <td class="label">Bank Name</td>
-          <td class="value">: ${escapeHtml(employee.bankName || '-')}</td>
-        </tr>
-        <tr>
-          <td class="label">Join Date</td>
-          <td class="value">: ${escapeHtml(model.joinDateLabel)}</td>
-          <td class="label">Bank Account No.</td>
-          <td class="value">: ${escapeHtml(employee.accountNo || '-')}</td>
-        </tr>
-        <tr>
-          <td class="label">Designation</td>
-          <td class="value">: ${escapeHtml(employee.designation || '-')}</td>
-          <td class="label">PAN No.</td>
-          <td class="value">: ${escapeHtml(employee.panNumber || '-')}</td>
-        </tr>
-        <tr>
-          <td class="label">Effective Work Days</td>
-          <td class="value">: ${model.workDays}</td>
-          <td class="label">LOP (Loss of Pay)</td>
-          <td class="value">: ${model.lop}</td>
-        </tr>
-        <tr>
-          <td class="label">Days In Month</td>
-          <td class="value">: ${model.daysInMonth}</td>
-          <td class="label"></td>
-          <td class="value"></td>
-        </tr>
-      </tbody>
-    </table>
-    <table>
-      <thead>
-        <tr>
-          <th>Earnings</th>
-          <th>Master</th>
-          <th>Amount</th>
-          <th>Deductions</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${earningRows}
-        <tr class="totals">
-          <td>Total Earnings</td>
-          <td class="num">${escapeHtml(model.totalMaster)}</td>
-          <td class="num">${escapeHtml(model.totalAmount)}</td>
-          <td>Total Deductions</td>
-          <td class="num">0.00</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="net">
-      <div class="net-row">
-        <span>Net Pay for the Month</span>
-        <strong>${model.netPay}</strong>
+    <img class="letterhead" src="${bg}" alt="" />
+    <div class="content">
+      <h1>Payslip for the month of ${escapeHtml(model.monthName)} ${model.year}</h1>
+      <table>
+        <tbody>
+          <tr>
+            <td class="label">Name</td>
+            <td class="value">: ${escapeHtml(employee.name)}</td>
+            <td class="label">Bank Name</td>
+            <td class="value">: ${escapeHtml(employee.bankName || '-')}</td>
+          </tr>
+          <tr>
+            <td class="label">Join Date</td>
+            <td class="value">: ${escapeHtml(model.joinDateLabel)}</td>
+            <td class="label">Bank Account No.</td>
+            <td class="value">: ${escapeHtml(employee.accountNo || '-')}</td>
+          </tr>
+          <tr>
+            <td class="label">Designation</td>
+            <td class="value">: ${escapeHtml(employee.designation || '-')}</td>
+            <td class="label">PAN No.</td>
+            <td class="value">: ${escapeHtml(employee.panNumber || '-')}</td>
+          </tr>
+          <tr>
+            <td class="label">Effective Work Days</td>
+            <td class="value">: ${model.workDays}</td>
+            <td class="label">LOP (Loss of Pay)</td>
+            <td class="value">: ${model.lop}</td>
+          </tr>
+          <tr>
+            <td class="label">Days In Month</td>
+            <td class="value">: ${model.daysInMonth}</td>
+            <td class="label"></td>
+            <td class="value"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <th>Earnings</th>
+            <th>Master</th>
+            <th>Amount</th>
+            <th>Deductions</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${earningRows}
+          <tr class="totals">
+            <td>Total Earnings</td>
+            <td class="num">${escapeHtml(model.totalMaster)}</td>
+            <td class="num">${escapeHtml(model.totalAmount)}</td>
+            <td>Total Deductions</td>
+            <td class="num">0.00</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="net">
+        <div class="net-row">
+          <span>Net Pay for the Month</span>
+          <strong>${model.netPay}</strong>
+        </div>
+        <p class="words">(${escapeHtml(model.netPayWords)})</p>
       </div>
-      <p class="words">(${escapeHtml(model.netPayWords)})</p>
+      <p class="footnote">This is a system generated payslip and does not require signature.</p>
     </div>
-    <p class="footnote">This is a system generated payslip and does not require signature.</p>
   </div>
 </body>
 </html>`

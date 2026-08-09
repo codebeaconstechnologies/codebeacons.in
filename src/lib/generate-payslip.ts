@@ -47,6 +47,8 @@ export async function buildPayslipPdf(
 
   const response = await browser.quickAction('pdf', {
     html,
+    // Ensure the letterhead <img> is painted before PDF capture.
+    waitForSelector: { selector: 'img.letterhead', timeout: 15000 },
     pdfOptions: {
       format: 'a4',
       landscape: false,

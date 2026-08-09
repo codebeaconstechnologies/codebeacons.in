@@ -8,6 +8,13 @@ export default function PayslipPrintView({ model }: { model: PayslipViewModel })
   return (
     <>
       <div className="cb-payslip-sheet">
+        {/* Real image layer — CSS backgrounds often disappear in print/PDF */}
+        <img
+          className="cb-payslip-letterhead"
+          src="/images/payslip-bg.jpg"
+          alt=""
+          aria-hidden="true"
+        />
         <div className="cb-payslip-inner">
           <h1 className="cb-payslip-title">
             Payslip for the month of {model.monthName} {model.year}
@@ -94,17 +101,36 @@ export default function PayslipPrintView({ model }: { model: PayslipViewModel })
 
       <style>{`
         .cb-payslip-sheet {
-          width: 297mm;
-          min-height: 210mm;
+          position: relative;
+          width: 210mm;
+          height: 297mm;
           margin: 0 auto;
-          background: #fff url('/images/payslip-bg.jpg') center top / 100% 100% no-repeat;
+          overflow: hidden;
+          background: #fff;
           color: #1a1a1a;
           font-family: Arial, Helvetica, sans-serif;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
         }
-        .cb-payslip-inner { padding: 40mm 14mm 12mm; }
+        .cb-payslip-letterhead {
+          position: absolute;
+          inset: 0;
+          width: 210mm;
+          height: 297mm;
+          object-fit: fill;
+          z-index: 0;
+          pointer-events: none;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .cb-payslip-inner {
+          position: relative;
+          z-index: 1;
+          padding: 42mm 12mm 12mm;
+        }
         .cb-payslip-title {
           text-align: center;
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 700;
           margin: 0 0 4mm;
         }
@@ -112,53 +138,57 @@ export default function PayslipPrintView({ model }: { model: PayslipViewModel })
         .cb-payslip-earnings {
           width: 100%;
           border-collapse: collapse;
-          font-size: 11px;
+          font-size: 10px;
           border: 0.35mm solid #282828;
           margin-bottom: 4mm;
+          background: transparent;
         }
         .cb-payslip-details td,
         .cb-payslip-earnings th,
         .cb-payslip-earnings td {
-          border: 0.12mm solid #d2d2d2;
-          padding: 2.2mm 2.5mm;
+          border: 0.12mm solid rgba(40, 40, 40, 0.45);
+          padding: 2.1mm 2.2mm;
           vertical-align: middle;
+          background: transparent;
         }
         .cb-label { font-weight: 700; width: 18%; color: #2d2d2d; }
         .cb-value { width: 32%; }
         .cb-payslip-earnings thead th {
-          background: #f8fafc;
           font-weight: 700;
           text-align: left;
+          background: transparent;
         }
         .cb-num { text-align: right; white-space: nowrap; }
-        .cb-totals td { font-weight: 700; background: #f8fafc; }
+        .cb-totals td { font-weight: 700; background: transparent; }
         .cb-payslip-net {
           border: 0.3mm solid #282828;
-          padding: 2.5mm 3mm;
-          margin-bottom: 6mm;
+          padding: 2.4mm 3mm;
+          margin-bottom: 8mm;
+          background: transparent;
         }
         .cb-net-row {
           display: flex;
           justify-content: space-between;
-          font-size: 12px;
+          font-size: 11px;
           font-weight: 700;
         }
         .cb-words {
           margin: 2mm 0 0;
           font-style: italic;
-          font-size: 11px;
+          font-size: 10px;
           color: #373737;
         }
         .cb-payslip-footnote {
           text-align: center;
-          font-size: 9px;
+          font-size: 8px;
           color: #6e6e6e;
           margin: 0;
         }
         @media print {
-          .cb-payslip-sheet {
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+          .cb-payslip-sheet,
+          .cb-payslip-letterhead {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
           }
         }
       `}</style>

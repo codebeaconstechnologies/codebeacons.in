@@ -1,24 +1,25 @@
 'use client'
 
 import { FormEvent, useMemo, useState } from 'react'
-import { Download } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Printer } from 'lucide-react'
 import type { Employee } from '@/types/employee'
 import { MONTHS } from '@/types/employee'
 import { getAdminTokenClient } from '@/lib/employees'
+import { PAYSLIP_DRAFT_KEY } from '@/lib/payslip-calc'
 
 interface PayslipFormProps {
   employees: Employee[]
 }
 
 export default function PayslipForm({ employees }: PayslipFormProps) {
+  const router = useRouter()
   const [employeeId, setEmployeeId] = useState('')
   const [month, setMonth] = useState(() => String(new Date().getMonth() + 1))
   const [year, setYear] = useState(() => String(new Date().getFullYear()))
   const [amount, setAmount] = useState('')
   const [workDays, setWorkDays] = useState('')
   const [lop, setLop] = useState('0')
-  const [busy, setBusy] = useState(false)
-  const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
   const years = useMemo(() => {
@@ -28,7 +29,6 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setMessage('')
     setError('')
 
     const employee = employees.find((item) => item.id === employeeId)
@@ -59,41 +59,19 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
       return
     }
 
-    setBusy(true)
-
-    // Native form POST (not fetch/blob/scripted <a download>).
-    // Server 303-redirects to a short-lived PDF URL that Chrome opens inline.
-    const form = document.createElement('form')
-    form.method = 'POST'
-    form.action = '/api/payslip'
-    form.target = '_blank'
-    form.acceptCharset = 'UTF-8'
-    form.style.display = 'none'
-
-    const fields: Record<string, string> = {
-      token,
-      employeeId,
-      month,
-      year,
-      amount: String(parsedAmount),
-      workDays: String(parsedWorkDays),
-      lop: String(parsedLop),
-    }
-
-    for (const [name, value] of Object.entries(fields)) {
-      const input = document.createElement('input')
-      input.type = 'hidden'
-      input.name = name
-      input.value = value
-      form.appendChild(input)
-    }
-
-    document.body.appendChild(form)
-    form.submit()
-    form.remove()
-
-    setMessage('Payslip opened in a new tab. Use Chrome’s download icon or Ctrl+S to save the PDF.')
-    setBusy(false)
+    // HTML preview + Chrome Print/Save as PDF — no binary download, no virus false positive.
+    sessionStorage.setItem(
+      PAYSLIP_DRAFT_KEY,
+      JSON.stringify({
+        employee,
+        month: Number(month),
+        year: Number(year),
+        amount: parsedAmount,
+        workDays: parsedWorkDays,
+        lop: parsedLop,
+      }),
+    )
+    router.push('/admin/payslip')
   }
 
   return (
@@ -101,8 +79,8 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
       <div className="mb-4">
         <h2 className="text-lg font-semibold text-slate-900">Generate Salary Slip</h2>
         <p className="text-sm text-slate-500">
-          Select employee, month/year, and credited amount. Earnings are split as Basic 40%, HRA 20%, LTA 5%,
-          Special Allowance 28%, Travel 7%. Deductions stay empty. PDF opens in a new Chrome tab (Chromium-generated).
+          Select employee, month/year, and credited amount. Opens a letterhead preview — use Print / Save as PDF
+          (no virus warning). Earnings: Basic 40%, HRA 20%, LTA 5%, Special Allowance 28%, Travel 7%.
         </p>
       </div>
 
@@ -198,16 +176,15 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
         <div className="sm:col-span-2 lg:col-span-3 flex flex-wrap items-center gap-3 pt-2">
           <button
             type="submit"
-            disabled={busy || employees.length === 0}
+            disabled={employees.length === 0}
             className="inline-flex items-center gap-2 rounded-lg bg-primary text-white px-4 py-2.5 text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
           >
-            <Download size={16} />
-            {busy ? 'Generating…' : 'Open PDF'}
+            <Printer size={16} />
+            Preview &amp; Print PDF
           </button>
           {employees.length === 0 ? (
             <span className="text-sm text-amber-700">Add at least one employee first.</span>
           ) : null}
-          {message ? <span className="text-sm text-emerald-700">{message}</span> : null}
           {error ? <span className="text-sm text-red-600">{error}</span> : null}
         </div>
       </form>
