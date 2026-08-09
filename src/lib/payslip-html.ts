@@ -1,5 +1,5 @@
 import type { PayslipViewModel } from '@/lib/payslip-calc'
-import { PAYSLIP_BG_JPEG_BASE64 } from '@/lib/payslip-bg-base64'
+import { PAYSLIP_BG_PNG_BASE64 } from '@/lib/payslip-bg-base64'
 
 function escapeHtml(value: string): string {
   return value
@@ -12,7 +12,7 @@ function escapeHtml(value: string): string {
 /** Portrait A4 HTML used by Cloudflare Browser Rendering → Chromium PDF. */
 export function renderPayslipHtml(model: PayslipViewModel): string {
   const { employee } = model
-  const bg = `data:image/jpeg;base64,${PAYSLIP_BG_JPEG_BASE64}`
+  const bg = `data:image/png;base64,${PAYSLIP_BG_PNG_BASE64}`
 
   const earningRows = model.earnings
     .map(
@@ -53,13 +53,14 @@ export function renderPayslipHtml(model: PayslipViewModel): string {
       overflow: hidden;
       background: #fff;
     }
-    /* Real <img> letterhead — CSS backgrounds are often dropped in print/PDF */
+    /* Real <img> letterhead — cover keeps A4 ratio (no logo stretch) */
     .letterhead {
       position: absolute;
       inset: 0;
-      width: 210mm;
-      height: 297mm;
-      object-fit: fill;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
       z-index: 0;
       pointer-events: none;
       -webkit-print-color-adjust: exact !important;
@@ -68,7 +69,7 @@ export function renderPayslipHtml(model: PayslipViewModel): string {
     .content {
       position: relative;
       z-index: 1;
-      padding: 42mm 12mm 12mm;
+      padding: 46mm 14mm 14mm;
     }
     h1 {
       margin: 0 0 4mm;

@@ -49,14 +49,14 @@ export async function GET(req: NextRequest) {
 
     const bytes = new Uint8Array(file)
     const asciiName = meta.fileName.replace(/[^\x20-\x7E]/g, '_').replace(/"/g, '')
+    const forceDownload = req.nextUrl.searchParams.get('download') === '1'
+    const disposition = forceDownload ? 'attachment' : 'inline'
 
     return new NextResponse(bytes, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        // inline = open in Chrome PDF viewer (avoids download-shelf AV false positives).
-        // Users save with the viewer download button / Ctrl+S.
-        'Content-Disposition': `inline; filename="${asciiName}"; filename*=UTF-8''${encodeURIComponent(meta.fileName)}`,
+        'Content-Disposition': `${disposition}; filename="${asciiName}"; filename*=UTF-8''${encodeURIComponent(meta.fileName)}`,
         'Content-Length': String(bytes.byteLength),
         'Cache-Control': 'private, max-age=120',
         'X-Content-Type-Options': 'nosniff',

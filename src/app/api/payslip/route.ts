@@ -126,9 +126,9 @@ export async function POST(req: NextRequest) {
       )
       const downloadUrl = `${origin}/api/payslip/file?id=${encodeURIComponent(id)}`
 
-      // Native browser form submit → 303 → PDF. No JS blob / scripted click.
+      // Native browser form submit → 303 → PDF download.
       if (formPost) {
-        return NextResponse.redirect(downloadUrl, 303)
+        return NextResponse.redirect(`${downloadUrl}&download=1`, 303)
       }
 
       return NextResponse.json({ downloadUrl, fileName })

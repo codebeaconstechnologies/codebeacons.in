@@ -11,7 +11,7 @@ export default function PayslipPrintView({ model }: { model: PayslipViewModel })
         {/* Real image layer — CSS backgrounds often disappear in print/PDF */}
         <img
           className="cb-payslip-letterhead"
-          src="/images/payslip-bg.jpg"
+          src="/images/payslip-bg.png"
           alt=""
           aria-hidden="true"
         />
@@ -115,9 +115,10 @@ export default function PayslipPrintView({ model }: { model: PayslipViewModel })
         .cb-payslip-letterhead {
           position: absolute;
           inset: 0;
-          width: 210mm;
-          height: 297mm;
-          object-fit: fill;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
           z-index: 0;
           pointer-events: none;
           -webkit-print-color-adjust: exact !important;
@@ -126,7 +127,7 @@ export default function PayslipPrintView({ model }: { model: PayslipViewModel })
         .cb-payslip-inner {
           position: relative;
           z-index: 1;
-          padding: 42mm 12mm 12mm;
+          padding: 46mm 14mm 14mm;
         }
         .cb-payslip-title {
           text-align: center;
