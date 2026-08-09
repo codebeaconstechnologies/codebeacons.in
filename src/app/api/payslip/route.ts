@@ -78,30 +78,32 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Employee not found' }, { status: 404 })
     }
 
-    const { pdf, fileName } = await buildPayslipPdf(
-      {
-        employee,
-        month,
-        year,
-        amount,
-        workDays,
-        lop,
-      },
-      { origin: new URL(req.url).origin },
-    )
+    const { pdf, fileName } = await buildPayslipPdf({
+      employee,
+      month,
+      year,
+      amount,
+      workDays,
+      lop,
+    })
 
-    return new NextResponse(Buffer.from(pdf), {
+    const bytes = Uint8Array.from(pdf)
+    return new NextResponse(bytes, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="${fileName}"; filename*=UTF-8''${encodeURIComponent(fileName)}`,
-        'Content-Length': String(pdf.byteLength),
+        'Content-Length': String(bytes.byteLength),
         'Cache-Control': 'no-store',
         'X-Content-Type-Options': 'nosniff',
       },
     })
   } catch (error) {
+    const detail = error instanceof Error ? error.message : 'Unknown error'
     console.error('Payslip generation error:', error)
-    return NextResponse.json({ error: 'Failed to generate payslip' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to generate payslip', detail },
+      { status: 500 },
+    )
   }
 }

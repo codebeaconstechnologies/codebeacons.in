@@ -1,24 +1,24 @@
 'use client'
 
 import { FormEvent, useMemo, useState } from 'react'
-import { Download } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Printer } from 'lucide-react'
 import type { Employee } from '@/types/employee'
 import { MONTHS } from '@/types/employee'
-import { getAdminTokenClient } from '@/lib/employees'
+import { PAYSLIP_DRAFT_KEY } from '@/lib/payslip-calc'
 
 interface PayslipFormProps {
   employees: Employee[]
 }
 
 export default function PayslipForm({ employees }: PayslipFormProps) {
+  const router = useRouter()
   const [employeeId, setEmployeeId] = useState('')
   const [month, setMonth] = useState(() => String(new Date().getMonth() + 1))
   const [year, setYear] = useState(() => String(new Date().getFullYear()))
   const [amount, setAmount] = useState('')
   const [workDays, setWorkDays] = useState('')
   const [lop, setLop] = useState('0')
-  const [busy, setBusy] = useState(false)
-  const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
   const years = useMemo(() => {
@@ -28,7 +28,6 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
-    setMessage('')
     setError('')
 
     const employee = employees.find((item) => item.id === employeeId)
@@ -40,12 +39,7 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
     const parsedAmount = Number(amount)
     const parsedWorkDays = Number(workDays)
     const parsedLop = Number(lop)
-    const token = getAdminTokenClient()
 
-    if (!token) {
-      setError('Session expired. Please log in again.')
-      return
-    }
     if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
       setError('Enter a valid salary amount')
       return
@@ -59,45 +53,19 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
       return
     }
 
-    try {
-      setBusy(true)
+    sessionStorage.setItem(
+      PAYSLIP_DRAFT_KEY,
+      JSON.stringify({
+        employee,
+        month: Number(month),
+        year: Number(year),
+        amount: parsedAmount,
+        workDays: parsedWorkDays,
+        lop: parsedLop,
+      }),
+    )
 
-      // Navigate-based form POST download (same-origin HTTP response).
-      // Avoids Chrome Safe Browsing false positives on client-side blob PDFs.
-      const form = document.createElement('form')
-      form.method = 'POST'
-      form.action = '/api/payslip'
-      form.target = '_blank'
-      form.style.display = 'none'
-
-      const fields: Record<string, string> = {
-        token,
-        employeeId,
-        month,
-        year,
-        amount: String(parsedAmount),
-        workDays: String(parsedWorkDays),
-        lop: String(parsedLop),
-      }
-
-      Object.entries(fields).forEach(([name, value]) => {
-        const input = document.createElement('input')
-        input.type = 'hidden'
-        input.name = name
-        input.value = value
-        form.appendChild(input)
-      })
-
-      document.body.appendChild(form)
-      form.submit()
-      form.remove()
-
-      setMessage('Payslip download started. If a new tab opened, use Save there.')
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate payslip')
-    } finally {
-      setBusy(false)
-    }
+    router.push('/admin/payslip')
   }
 
   return (
@@ -202,16 +170,15 @@ export default function PayslipForm({ employees }: PayslipFormProps) {
         <div className="sm:col-span-2 lg:col-span-3 flex flex-wrap items-center gap-3 pt-2">
           <button
             type="submit"
-            disabled={busy || employees.length === 0}
+            disabled={employees.length === 0}
             className="inline-flex items-center gap-2 rounded-lg bg-primary text-white px-4 py-2.5 text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
           >
-            <Download size={16} />
-            {busy ? 'Generating…' : 'Create & Download PDF'}
+            <Printer size={16} />
+            Create & Save as PDF
           </button>
           {employees.length === 0 ? (
             <span className="text-sm text-amber-700">Add at least one employee first.</span>
           ) : null}
-          {message ? <span className="text-sm text-emerald-700">{message}</span> : null}
           {error ? <span className="text-sm text-red-600">{error}</span> : null}
         </div>
       </form>

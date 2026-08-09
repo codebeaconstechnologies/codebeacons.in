@@ -1,5 +1,3 @@
-import { promises as fs } from 'fs'
-import path from 'path'
 import { jsPDF } from 'jspdf'
 import {
   EARNING_BREAKDOWN,
@@ -7,6 +5,7 @@ import {
   type PayslipInput,
 } from '@/types/employee'
 import { amountInWords, formatINR } from '@/lib/number-to-words'
+import { PAYSLIP_BG_JPEG_BASE64 } from '@/lib/payslip-bg-base64'
 
 function daysInMonth(month: number, year: number): number {
   return new Date(year, month, 0).getDate()
@@ -16,43 +15,19 @@ function formatDate(isoDate: string): string {
   if (!isoDate) return ''
   const date = new Date(isoDate)
   if (Number.isNaN(date.getTime())) return isoDate
-  return date.toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  })
+  const day = String(date.getUTCDate()).padStart(2, '0')
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const month = months[date.getUTCMonth()]
+  return `${day} ${month} ${date.getUTCFullYear()}`
 }
 
 function sanitizeFilePart(value: string): string {
   return value.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_|_$/g, '')
 }
 
-function bytesToDataUrl(bytes: Uint8Array, mime: 'image/jpeg' | 'image/png'): string {
-  return `data:${mime};base64,${Buffer.from(bytes).toString('base64')}`
-}
-
-async function loadBackgroundDataUrl(origin?: string): Promise<string> {
-  // Prefer JPEG — more standard in PDFs and less likely to trip AV heuristics.
-  try {
-    const jpgPath = path.join(process.cwd(), 'public', 'images', 'payslip-bg.jpg')
-    const bytes = await fs.readFile(jpgPath)
-    return bytesToDataUrl(bytes, 'image/jpeg')
-  } catch {
-    // Cloudflare Workers: public assets are not on disk — fetch from the site origin.
-  }
-
-  if (origin) {
-    const response = await fetch(new URL('/images/payslip-bg.jpg', origin))
-    if (response.ok) {
-      return bytesToDataUrl(new Uint8Array(await response.arrayBuffer()), 'image/jpeg')
-    }
-    const pngResponse = await fetch(new URL('/images/payslip-bg.png', origin))
-    if (pngResponse.ok) {
-      return bytesToDataUrl(new Uint8Array(await pngResponse.arrayBuffer()), 'image/png')
-    }
-  }
-
-  throw new Error('Failed to load payslip background')
+function loadBackgroundDataUrl(): string {
+  // Bundled into the Worker so Cloudflare does not need disk/ASSETS access.
+  return `data:image/jpeg;base64,${PAYSLIP_BG_JPEG_BASE64}`
 }
 
 /** Baseline for vertically centered text inside a row. */
@@ -67,7 +42,6 @@ export function getPayslipFileName(input: Pick<PayslipInput, 'employee' | 'month
 
 export async function buildPayslipPdf(
   input: PayslipInput,
-  options?: { origin?: string },
 ): Promise<{ pdf: Uint8Array; fileName: string }> {
   const { employee, month, year, amount, workDays, lop } = input
   const monthName = MONTHS[month - 1]
@@ -85,18 +59,16 @@ export async function buildPayslipPdf(
   const totalAmount = earnings.reduce((sum, row) => sum + row.amount, 0)
   const netPay = Math.round(totalAmount)
 
-  const bg = await loadBackgroundDataUrl(options?.origin)
-  const isJpeg = bg.startsWith('data:image/jpeg')
+  const bg = loadBackgroundDataUrl()
   const doc = new jsPDF({
     orientation: 'landscape',
     unit: 'mm',
     format: 'a4',
-    compress: true,
   })
   const pageW = doc.internal.pageSize.getWidth()
   const pageH = doc.internal.pageSize.getHeight()
 
-  doc.addImage(bg, isJpeg ? 'JPEG' : 'PNG', 0, 0, pageW, pageH)
+  doc.addImage(bg, 'JPEG', 0, 0, pageW, pageH)
 
   const marginX = 14
   const contentTop = 40
