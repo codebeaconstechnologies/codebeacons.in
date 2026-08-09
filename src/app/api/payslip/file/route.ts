@@ -4,7 +4,6 @@ import { isValidAdminToken } from '@/lib/admin-auth'
 type PayslipKv = {
   get(key: string, type: 'arrayBuffer'): Promise<ArrayBuffer | null>
   get(key: string, type: 'json'): Promise<unknown>
-  delete(key: string): Promise<void>
 }
 
 async function getKv(): Promise<PayslipKv | null> {
@@ -17,6 +16,12 @@ async function getKv(): Promise<PayslipKv | null> {
   }
 }
 
+/**
+ * Serve a short-lived Chromium PDF.
+ * IMPORTANT: do not delete on first GET — Chrome / Windows AV often fetch the
+ * URL more than once while scanning. Deleting on first hit makes the second
+ * fetch 404 and Chrome reports "Virus detected".
+ */
 export async function GET(req: NextRequest) {
   try {
     const id = req.nextUrl.searchParams.get('id')?.trim()
@@ -42,20 +47,18 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'File not found or expired' }, { status: 404 })
     }
 
-    // One-time download
-    await Promise.all([
-      kv.delete(`payslip-file:${id}`),
-      kv.delete(`payslip-meta:${id}`),
-    ])
-
     const bytes = new Uint8Array(file)
+    const asciiName = meta.fileName.replace(/[^\x20-\x7E]/g, '_').replace(/"/g, '')
+
     return new NextResponse(bytes, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${meta.fileName}"; filename*=UTF-8''${encodeURIComponent(meta.fileName)}`,
+        // inline = open in Chrome PDF viewer (avoids download-shelf AV false positives).
+        // Users save with the viewer download button / Ctrl+S.
+        'Content-Disposition': `inline; filename="${asciiName}"; filename*=UTF-8''${encodeURIComponent(meta.fileName)}`,
         'Content-Length': String(bytes.byteLength),
-        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Cache-Control': 'private, max-age=120',
         'X-Content-Type-Options': 'nosniff',
       },
     })

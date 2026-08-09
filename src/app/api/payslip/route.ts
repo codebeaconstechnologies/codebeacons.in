@@ -53,8 +53,17 @@ function unauthorized() {
   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 }
 
+function isFormPost(req: NextRequest): boolean {
+  const contentType = req.headers.get('content-type') || ''
+  return (
+    contentType.includes('application/x-www-form-urlencoded') ||
+    contentType.includes('multipart/form-data')
+  )
+}
+
 export async function POST(req: NextRequest) {
   try {
+    const formPost = isFormPost(req)
     const body = await parseBody(req)
     const header = req.headers.get('authorization') || ''
     const bearer = header.startsWith('Bearer ') ? header.slice(7).trim() : ''
@@ -105,21 +114,24 @@ export async function POST(req: NextRequest) {
 
     const bytes = Uint8Array.from(pdf)
     const kv = await getKv()
+    const origin = new URL(req.url).origin
 
-    // Prefer a short-lived GET download URL (normal browser file download).
     if (kv) {
       const id = crypto.randomUUID()
-      await kv.put(`payslip-file:${id}`, bytes, { expirationTtl: 180 })
+      await kv.put(`payslip-file:${id}`, bytes, { expirationTtl: 300 })
       await kv.put(
         `payslip-meta:${id}`,
         JSON.stringify({ fileName, token }),
-        { expirationTtl: 180 },
+        { expirationTtl: 300 },
       )
-      const origin = new URL(req.url).origin
-      return NextResponse.json({
-        downloadUrl: `${origin}/api/payslip/file?id=${encodeURIComponent(id)}`,
-        fileName,
-      })
+      const downloadUrl = `${origin}/api/payslip/file?id=${encodeURIComponent(id)}`
+
+      // Native browser form submit → 303 → PDF. No JS blob / scripted click.
+      if (formPost) {
+        return NextResponse.redirect(downloadUrl, 303)
+      }
+
+      return NextResponse.json({ downloadUrl, fileName })
     }
 
     // Local/dev fallback: return PDF bytes directly.
@@ -127,7 +139,7 @@ export async function POST(req: NextRequest) {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${fileName}"`,
+        'Content-Disposition': `inline; filename="${fileName}"`,
         'Content-Length': String(bytes.byteLength),
         'Cache-Control': 'no-store',
         'X-Content-Type-Options': 'nosniff',
