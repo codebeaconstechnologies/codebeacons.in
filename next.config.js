@@ -24,6 +24,16 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/contact.html',
+        destination: '/contact',
+        permanent: true,
+      },
+      {
+        source: '/contact.HTML',
+        destination: '/contact',
+        permanent: true,
+      },
+      {
         source: '/index.html',
         destination: '/',
         permanent: true,
@@ -32,6 +42,12 @@ const nextConfig = {
   },
   async headers() {
     return [
+      {
+        source: '/opengraph-image',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex' },
+        ],
+      },
       {
         source: '/_next/static/:path*',
         headers: [

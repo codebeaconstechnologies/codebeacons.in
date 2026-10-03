@@ -8,7 +8,9 @@ import FAQSection from '@/components/home/FAQSection'
 import CTASection from '@/components/home/CTASection'
 
 export const metadata: Metadata = {
-  title: 'Code Beacons Technologies | Senior-Led Software Engineering · Pune',
+  title: {
+    absolute: 'Senior-Led Software Engineering in Pune | Code Beacons Technologies',
+  },
   description:
     'Code Beacons Technologies — senior-led software development, .NET & Azure engineering, and IT consulting in Pune. Every project is led by a 10+ year engineer. No juniors on client work.',
   alternates: {

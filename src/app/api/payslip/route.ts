@@ -15,11 +15,20 @@ type PayslipBody = {
 }
 
 type PayslipKv = {
+  get(key: string, type: 'arrayBuffer'): Promise<ArrayBuffer | null>
+  get(key: string, type: 'json'): Promise<unknown>
   put(
     key: string,
     value: ArrayBuffer | Uint8Array | string,
     options?: { expirationTtl?: number },
   ): Promise<void>
+}
+
+type PayslipRenderCache = {
+  id: string
+  fileName: string
+  token: string
+  generatedAt: number
 }
 
 async function getKv(): Promise<PayslipKv | null> {
@@ -29,6 +38,50 @@ async function getKv(): Promise<PayslipKv | null> {
     return (env as { EMPLOYEES?: PayslipKv } | undefined)?.EMPLOYEES ?? null
   } catch {
     return null
+  }
+}
+
+function buildPayslipCacheKey(payload: {
+  employeeId: string
+  month: number
+  year: number
+  amount: number
+  workDays: number
+  lop: number
+}): string {
+  const normalized = {
+    employeeId: payload.employeeId.trim(),
+    month: Number(payload.month),
+    year: Number(payload.year),
+    amount: Number(payload.amount.toFixed(2)),
+    workDays: Number(payload.workDays),
+    lop: Number(payload.lop.toFixed(2)),
+  }
+  return `payslip-render:${JSON.stringify(normalized)}`
+}
+
+async function getCachedPayslip(kv: PayslipKv, cacheKey: string, token: string) {
+  const cached = (await kv.get(cacheKey, 'json')) as PayslipRenderCache | null
+  if (!cached?.id || !cached.fileName || !cached.token) {
+    return null
+  }
+
+  if (cached.token !== token) {
+    return null
+  }
+
+  const meta = (await kv.get(`payslip-meta:${cached.id}`, 'json')) as {
+    fileName?: string
+    token?: string
+  } | null
+
+  if (!meta?.fileName || meta.token !== token) {
+    return null
+  }
+
+  return {
+    id: cached.id,
+    fileName: cached.fileName,
   }
 }
 
@@ -103,6 +156,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Employee not found' }, { status: 404 })
     }
 
+    const kv = await getKv()
+    const origin = new URL(req.url).origin
+    const cacheKey = buildPayslipCacheKey({ employeeId, month, year, amount, workDays, lop })
+
+    if (kv) {
+      const cached = await getCachedPayslip(kv, cacheKey, token)
+      if (cached) {
+        const downloadUrl = `${origin}/api/payslip/file?id=${encodeURIComponent(cached.id)}`
+        if (formPost) {
+          return NextResponse.redirect(`${downloadUrl}&download=1`, 303)
+        }
+        return NextResponse.json({ downloadUrl, fileName: cached.fileName, cached: true })
+      }
+    }
+
     const { pdf, fileName } = await buildPayslipPdf({
       employee,
       month,
@@ -113,8 +181,6 @@ export async function POST(req: NextRequest) {
     })
 
     const bytes = Uint8Array.from(pdf)
-    const kv = await getKv()
-    const origin = new URL(req.url).origin
 
     if (kv) {
       const id = crypto.randomUUID()
@@ -124,6 +190,11 @@ export async function POST(req: NextRequest) {
         JSON.stringify({ fileName, token }),
         { expirationTtl: 300 },
       )
+      await kv.put(
+        cacheKey,
+        JSON.stringify({ id, fileName, token, generatedAt: Date.now() }),
+        { expirationTtl: 300 },
+      )
       const downloadUrl = `${origin}/api/payslip/file?id=${encodeURIComponent(id)}`
 
       // Native browser form submit → 303 → PDF download.
@@ -131,7 +202,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.redirect(`${downloadUrl}&download=1`, 303)
       }
 
-      return NextResponse.json({ downloadUrl, fileName })
+      return NextResponse.json({ downloadUrl, fileName, cached: false })
     }
 
     // Local/dev fallback: return PDF bytes directly.

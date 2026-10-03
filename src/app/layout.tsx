@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import SiteChrome from '@/components/layout/SiteChrome'
@@ -20,7 +21,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://codebeacons.in'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Code Beacons Technologies | Software Development Company Pune',
+    default: 'Software Development Company in Pune',
     template: '%s | Code Beacons Technologies',
   },
   description:
@@ -183,6 +184,18 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <Script id="google-analytics-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){window.dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-PVE4F10279');
+          `}
+        </Script>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-PVE4F10279"
+          strategy="afterInteractive"
+        />
         <SiteChrome>{children}</SiteChrome>
       </body>
     </html>

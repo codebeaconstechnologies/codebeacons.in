@@ -7,7 +7,7 @@ import ProcessSection from '@/components/home/ProcessSection'
 import CTASection from '@/components/home/CTASection'
 
 export const metadata: Metadata = {
-  title: 'Software Development & IT Services | Code Beacons',
+  title: 'Software Development & IT Services in Pune',
   description:
     'Explore Code Beacons Technologies\' full range of services: custom software development, cloud migration, IT consulting, cybersecurity, mobile apps, and AI analytics. Based in Pune, serving India.',
   alternates: { canonical: '/services' },

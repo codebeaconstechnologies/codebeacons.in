@@ -7,7 +7,7 @@ import ContactForm from '@/components/contact/ContactForm'
 import ContactInfo from '@/components/contact/ContactInfo'
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Get a Free Consultation — Code Beacons',
+  title: 'Contact Us | Get a Free Consultation',
   description:
     'Contact Code Beacons Technologies for a free software development consultation. Reach us at hrteam@codebeacons.in or visit us in Pimpri Chinchwad, Pune. Response within 24 hours.',
   alternates: { canonical: '/contact' },

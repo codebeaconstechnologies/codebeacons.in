@@ -6,7 +6,7 @@ import FadeUp from '@/components/ui/FadeUp'
 import CTASection from '@/components/home/CTASection'
 
 export const metadata: Metadata = {
-  title: 'About Code Beacons | Built on Experience. Focused on Outcomes.',
+  title: 'About Us | Senior Software Engineers in Pune',
   description:
     'Code Beacons Technologies is a Pune-based engineering team delivering enterprise .NET, Azure, and full-stack solutions. Every engagement is technically led by a 10+ year engineer.',
   alternates: { canonical: '/about' },

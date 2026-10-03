@@ -6,7 +6,7 @@ import FadeUp from '@/components/ui/FadeUp'
 import BlogCard from '@/components/blog/BlogCard'
 
 export const metadata: Metadata = {
-  title: 'Insights & Tech Updates | Code Beacons Blog',
+  title: 'Insights & Tech Updates',
   description:
     'Practical insights on software development, AI, cloud solutions, and technology strategy from the Code Beacons Technologies team. Written by engineers, for decision-makers.',
   alternates: { canonical: '/blog' },
